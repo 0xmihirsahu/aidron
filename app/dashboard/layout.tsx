@@ -2,15 +2,14 @@ import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, S
 import { Badge } from "@/components/ui/badge"
 import { 
   LayoutDashboard, 
-  Zap, 
   Trophy, 
   Store, 
   FlaskConical, 
   BarChart3, 
-  Coins, 
   Users,
-  PanelLeftClose
+//   PanelLeftClose
 } from "lucide-react"
+import Link from "next/link"
 
 export default function DashboardLayout({
   children,
@@ -34,76 +33,58 @@ export default function DashboardLayout({
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive>
-                  <a href="/dashboard" className="flex items-center gap-3">
+                  <Link href="/dashboard" className="flex items-center gap-3">
                     <LayoutDashboard className="h-4 w-4" />
                     <span>Dashboard</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href="/dashboard/airdrop" className="flex items-center gap-3">
-                    <Zap className="h-4 w-4" />
-                    <span>Airdrop</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
               
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard/leaderboard" className="flex items-center gap-3">
+                  <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
                     <Trophy className="h-4 w-4" />
                     <span>Leaderboard</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard/slm-store" className="flex items-center gap-3">
+                  <Link href="/dashboard/store" className="flex items-center gap-3">
                     <Store className="h-4 w-4" />
                     <span>SLM Store</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard/ai-lab" className="flex items-center gap-3">
+                  <Link href="/dashboard/lab" className="flex items-center gap-3">
                     <FlaskConical className="h-4 w-4" />
                     <span>AI Lab</span>
                     <Badge variant="secondary" className="ml-auto">Beta</Badge>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard/data-market" className="flex items-center gap-3">
+                  <Link href="/dashboard/data-market" className="flex items-center gap-3">
                     <BarChart3 className="h-4 w-4" />
                     <span>Data Market</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/dashboard/tokenization-hub" className="flex items-center gap-3">
-                    <Coins className="h-4 w-4" />
-                    <span>Tokenization Hub</span>
-                    <Badge variant="secondary" className="ml-auto">soon</Badge>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href="/dashboard/contribute" className="flex items-center gap-3">
+                  <Link href="/dashboard/contribute" className="flex items-center gap-3">
                     <Users className="h-4 w-4" />
                     <span>Contribute & Earn</span>
                     <Badge variant="secondary" className="ml-auto">soon</Badge>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
