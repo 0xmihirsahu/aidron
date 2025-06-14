@@ -7,9 +7,80 @@ import {
   FlaskConical, 
   BarChart3, 
   Users,
-//   PanelLeftClose
 } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+function SidebarNav() {
+  const pathname = usePathname()
+  
+  const isActive = (path: string) => {
+    if (path === '/dashboard') {
+      return pathname === '/dashboard'
+    }
+    return pathname.startsWith(path)
+  }
+
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <LayoutDashboard className="h-4 w-4" />
+            <span>Dashboard</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard/leaderboard')}>
+          <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
+            <Trophy className="h-4 w-4" />
+            <span>Leaderboard</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard/store')}>
+          <Link href="/dashboard/store" className="flex items-center gap-3">
+            <Store className="h-4 w-4" />
+            <span>SLM Store</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard/lab')}>
+          <Link href="/dashboard/lab" className="flex items-center gap-3">
+            <FlaskConical className="h-4 w-4" />
+            <span>AI Lab</span>
+            <Badge variant="secondary" className="ml-auto">Beta</Badge>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard/data-market')}>
+          <Link href="/dashboard/data-market" className="flex items-center gap-3">
+            <BarChart3 className="h-4 w-4" />
+            <span>Data Market</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild isActive={isActive('/dashboard/contribute')}>
+          <Link href="/dashboard/contribute" className="flex items-center gap-3">
+            <Users className="h-4 w-4" />
+            <span>Contribute & Earn</span>
+            <Badge variant="secondary" className="ml-auto">soon</Badge>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  )
+}
 
 export default function DashboardLayout({
   children,
@@ -30,64 +101,7 @@ export default function DashboardLayout({
           </SidebarHeader>
           
           <SidebarContent className="px-2">
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive>
-                  <Link href="/dashboard" className="flex items-center gap-3">
-                    <LayoutDashboard className="h-4 w-4" />
-                    <span>Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
-                    <Trophy className="h-4 w-4" />
-                    <span>Leaderboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/store" className="flex items-center gap-3">
-                    <Store className="h-4 w-4" />
-                    <span>SLM Store</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/lab" className="flex items-center gap-3">
-                    <FlaskConical className="h-4 w-4" />
-                    <span>AI Lab</span>
-                    <Badge variant="secondary" className="ml-auto">Beta</Badge>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/data-market" className="flex items-center gap-3">
-                    <BarChart3 className="h-4 w-4" />
-                    <span>Data Market</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/dashboard/contribute" className="flex items-center gap-3">
-                    <Users className="h-4 w-4" />
-                    <span>Contribute & Earn</span>
-                    <Badge variant="secondary" className="ml-auto">soon</Badge>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+            <SidebarNav />
           </SidebarContent>
         </Sidebar>
         
