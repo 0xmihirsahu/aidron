@@ -68,10 +68,10 @@ function SidebarNavContent() {
           </SidebarMenuItem>
           
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/lab')}>
-              <Link href="/dashboard/lab" className="flex items-center gap-3">
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/workshop')}>
+              <Link href="/dashboard/workshop" className="flex items-center gap-3">
                 <FlaskConical className="h-4 w-4" />
-                <span>AI Lab</span>
+                <span>AI Workshop</span>
                 <Badge variant="secondary" className="ml-auto">Beta</Badge>
               </Link>
             </SidebarMenuButton>

@@ -16,7 +16,7 @@ export function Header() {
   const router = useRouter()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6 max-w-[2400px] mx-auto">
         {/* Logo */}
         <div className="flex items-center gap-3">
@@ -36,9 +36,9 @@ export function Header() {
         {/* Navigation Menu */}
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="gap-2">
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard" className={navigationMenuTriggerStyle()}>
-                Dashboard
+          <NavigationMenuItem >
+              <NavigationMenuLink href="/dashboard/workshop"   className={navigationMenuTriggerStyle() }>
+                AI Workshop
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -51,11 +51,7 @@ export function Header() {
                 SLM Store
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard/lab" className={navigationMenuTriggerStyle()}>
-                AI Lab
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            
           </NavigationMenuList>
         </NavigationMenu>
 
