@@ -4,13 +4,8 @@ import * as React from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+
+import Link from "next/link"
 
 export function Header() {
   const router = useRouter()
@@ -34,26 +29,37 @@ export function Header() {
         </div>
 
         {/* Navigation Menu */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-2">
-          <NavigationMenuItem >
-              <NavigationMenuLink href="/dashboard/workshop"   className={navigationMenuTriggerStyle() }>
+        <nav className="hidden md:flex">
+          <ul className="flex items-center gap-6">
+            <li>
+              <Link 
+                href="/dashboard/workshop" 
+                className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              >
                 AI Workshop
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard/leaderboard" className={navigationMenuTriggerStyle()}>
+                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-primary/0 via-primary/70 to-primary/0 opacity-0 transition-opacity group-hover:opacity-100" />
+              </Link>
+            </li>
+            <li>
+              <Link 
+                href="/dashboard/leaderboard"
+                className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              >
                 Leaderboard
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink href="/dashboard/store" className={navigationMenuTriggerStyle()}>
+                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-primary/0 via-primary/70 to-primary/0 opacity-0 transition-opacity group-hover:opacity-100" />
+              </Link>
+            </li>
+            <li>
+              <Link 
+                href="/dashboard/store"
+                className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
+              >
                 SLM Store
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            
-          </NavigationMenuList>
-        </NavigationMenu>
+                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-primary/0 via-primary/70 to-primary/0 opacity-0 transition-opacity group-hover:opacity-100" />
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
         {/* Connect Wallet Button */}
         <div className="flex items-center">
