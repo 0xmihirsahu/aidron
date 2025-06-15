@@ -4,13 +4,14 @@ import { Entropy } from "@/components/ui/entropy";
 import { ArrowRight, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="relative min-h-screen">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
       
-      <div className="container relative mx-auto px-4 py-48 sm:px-6 lg:px-8">
+      <div className="container relative mx-auto px-4 py-32 sm:px-6 lg:px-8">
         <div className="text-center max-w-5xl mx-auto mb-12">
           <Badge variant="outline" className="mb-6 px-4 py-2">
             <Sparkles className="h-3 w-3 mr-2" />
@@ -27,7 +28,7 @@ export default function Home() {
             Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model effortlessly. 
             Create agents that understand your specific domain and deliver exceptional results.
           </p>
-          
+          <Image src="/image.png" alt="Hero" width={1000} height={1000} />
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/dashboard">
               <Button size="lg" className="gap-2 px-8">

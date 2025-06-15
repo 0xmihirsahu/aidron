@@ -1,6 +1,6 @@
 'use client'
 
-import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { 
   LayoutDashboard, 
@@ -11,10 +11,14 @@ import {
   Users,
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useSidebar, SidebarProvider } from "@/components/ui/sidebar"
+import Image from "next/image"
 
-function SidebarNav() {
+function SidebarNavContent() {
   const pathname = usePathname()
+  const { open } = useSidebar()
+  const router = useRouter()
   
   const isActive = (path: string) => {
     if (path === '/dashboard') {
@@ -24,63 +28,76 @@ function SidebarNav() {
   }
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <LayoutDashboard className="h-4 w-4" />
-            <span>Dashboard</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
+    <>
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lgtext-primary-foreground">
+            <Image src="/symbol-black.svg" alt="agenxy logo" width={32} height={32} />
+          </div>
+          { open && <Image onClick={() => router.push('/')} src="/agenxy-name-black.svg" alt="agenxy logo" className="cursor-pointer" width={100} height={100} />}
+        </div>
+      </SidebarHeader>
       
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard/leaderboard')}>
-          <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
-            <Trophy className="h-4 w-4" />
-            <span>Leaderboard</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard/store')}>
-          <Link href="/dashboard/store" className="flex items-center gap-3">
-            <Store className="h-4 w-4" />
-            <span>SLM Store</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard/lab')}>
-          <Link href="/dashboard/lab" className="flex items-center gap-3">
-            <FlaskConical className="h-4 w-4" />
-            <span>AI Lab</span>
-            <Badge variant="secondary" className="ml-auto">Beta</Badge>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard/data-market')}>
-          <Link href="/dashboard/data-market" className="flex items-center gap-3">
-            <BarChart3 className="h-4 w-4" />
-            <span>Data Market</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild isActive={isActive('/dashboard/contribute')}>
-          <Link href="/dashboard/contribute" className="flex items-center gap-3">
-            <Users className="h-4 w-4" />
-            <span>Contribute & Earn</span>
-            <Badge variant="secondary" className="ml-auto">soon</Badge>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    </SidebarMenu>
+      <SidebarContent className="px-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
+              <Link href="/dashboard" className="flex items-center gap-3">
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/leaderboard')}>
+              <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
+                <Trophy className="h-4 w-4" />
+                <span>Leaderboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/store')}>
+              <Link href="/dashboard/store" className="flex items-center gap-3">
+                <Store className="h-4 w-4" />
+                <span>SLM Store</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/lab')}>
+              <Link href="/dashboard/lab" className="flex items-center gap-3">
+                <FlaskConical className="h-4 w-4" />
+                <span>AI Lab</span>
+                <Badge variant="secondary" className="ml-auto">Beta</Badge>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/data-market')}>
+              <Link href="/dashboard/data-market" className="flex items-center gap-3">
+                <BarChart3 className="h-4 w-4" />
+                <span>Data Market</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/dashboard/contribute')}>
+              <Link href="/dashboard/contribute" className="flex items-center gap-3">
+                <Users className="h-4 w-4" />
+                <span>Contribute & Earn</span>
+                <Badge variant="secondary" className="ml-auto">soon</Badge>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+    </>
   )
 }
 
@@ -92,19 +109,8 @@ export default function DashboardLayout({
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
-        <Sidebar className="border-r">
-          <SidebarHeader className="p-4">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <span className="text-sm font-bold">A</span>
-              </div>
-              <span className="text-lg font-semibold">ASSISTERR</span>
-            </div>
-          </SidebarHeader>
-          
-          <SidebarContent className="px-2">
-            <SidebarNav />
-          </SidebarContent>
+        <Sidebar collapsible="icon" className="border-r">
+          <SidebarNavContent />
         </Sidebar>
         
         <SidebarInset className="flex-1">
