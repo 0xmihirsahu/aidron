@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Header } from "@/components/ui/header";
 import { cn } from "@/lib/utils";
 import { Timeline } from "@/components/ui/timeline";
+import FooterSection from "@/components/ui/footer";
 
 export default function Home() {
   const data = [
@@ -192,7 +193,10 @@ export default function Home() {
         <h4 className="text-2xl sm:text-3xl text-neutral-300">Users</h4>
       </div>
       </div>
+
+      
     </div>
+    <FooterSection />
     </>
   )
 }
