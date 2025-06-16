@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Entropy } from "@/components/ui/entropy";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
@@ -83,16 +83,16 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12">
-              <Link href="/dashboard" className="w-full sm:w-auto">
+              <Link href="/app" className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto gap-2 px-6 sm:px-8">
                   Start Building
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2 px-6 sm:px-8">
+              {/* <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2 px-6 sm:px-8">
                 <Play className="h-4 w-4" />
                 Watch Demo
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

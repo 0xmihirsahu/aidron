@@ -33,7 +33,7 @@ export function Header() {
           <ul className="flex items-center gap-6">
             <li>
               <Link 
-                href="/dashboard/workshop" 
+                href="/app/workshop" 
                 className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
               >
                 AI Workshop
@@ -42,7 +42,7 @@ export function Header() {
             </li>
             <li>
               <Link 
-                href="/dashboard/leaderboard"
+                href="/app/leaderboard"
                 className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
               >
                 Leaderboard
@@ -51,7 +51,7 @@ export function Header() {
             </li>
             <li>
               <Link 
-                href="/dashboard/store"
+                href="/app/store"
                 className="group relative px-4 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors"
               >
                 SLM Store

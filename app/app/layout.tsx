@@ -3,7 +3,6 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { 
-  LayoutDashboard, 
   Trophy, 
   Store, 
   FlaskConical, 
@@ -21,8 +20,8 @@ function SidebarNavContent() {
   const router = useRouter()
   
   const isActive = (path: string) => {
-    if (path === '/dashboard') {
-      return pathname === '/dashboard'
+    if (path === '/app') {
+      return pathname === '/app'
     }
     return pathname.startsWith(path)
   }
@@ -40,27 +39,10 @@ function SidebarNavContent() {
       
       <SidebarContent className="px-2">
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard')}>
-              <Link href="/dashboard" className="flex items-center gap-3">
-                <LayoutDashboard className="h-4 w-4" />
-                <span>Dashboard</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
           
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/leaderboard')}>
-              <Link href="/dashboard/leaderboard" className="flex items-center gap-3">
-                <Trophy className="h-4 w-4" />
-                <span>Leaderboard</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/store')}>
-              <Link href="/dashboard/store" className="flex items-center gap-3">
+            <SidebarMenuButton asChild isActive={isActive('/app/store')}>
+              <Link href="/app/store" className="flex items-center gap-3">
                 <Store className="h-4 w-4" />
                 <span>SLM Store</span>
               </Link>
@@ -68,8 +50,8 @@ function SidebarNavContent() {
           </SidebarMenuItem>
           
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/workshop')}>
-              <Link href="/dashboard/workshop" className="flex items-center gap-3">
+            <SidebarMenuButton asChild isActive={isActive('/app/workshop')}>
+              <Link href="/app/workshop" className="flex items-center gap-3">
                 <FlaskConical className="h-4 w-4" />
                 <span>AI Workshop</span>
                 <Badge variant="secondary" className="ml-auto">Beta</Badge>
@@ -78,8 +60,17 @@ function SidebarNavContent() {
           </SidebarMenuItem>
           
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/data-market')}>
-              <Link href="/dashboard/data-market" className="flex items-center gap-3">
+            <SidebarMenuButton asChild isActive={isActive('/app/leaderboard')}>
+              <Link href="/app/leaderboard" className="flex items-center gap-3">
+                <Trophy className="h-4 w-4" />
+                <span>Leaderboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={isActive('/app/data-market')}>
+              <Link href="/app/data-market" className="flex items-center gap-3">
                 <BarChart3 className="h-4 w-4" />
                 <span>Data Market</span>
               </Link>
@@ -87,8 +78,8 @@ function SidebarNavContent() {
           </SidebarMenuItem>
           
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive('/dashboard/contribute')}>
-              <Link href="/dashboard/contribute" className="flex items-center gap-3">
+            <SidebarMenuButton asChild isActive={isActive('/app/contribute')}>
+              <Link href="/app/contribute" className="flex items-center gap-3">
                 <Users className="h-4 w-4" />
                 <span>Contribute & Earn</span>
                 <Badge variant="secondary" className="ml-auto">soon</Badge>

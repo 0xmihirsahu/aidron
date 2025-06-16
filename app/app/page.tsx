@@ -1,13 +1,18 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Search, ArrowRight, ExternalLink } from "lucide-react"
+"use client"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function DashboardPage() {
+  const router = useRouter()
+  useEffect(() => {
+    router.push("/app/workshop")
+  }, [router])
   return (
     <div className="flex flex-col min-h-full">
+
       {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
+
+      {/* <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
         <h1 className="text-4xl font-bold tracking-tight mb-4">
           Launch Your Custom Specialized AI Agent
         </h1>
@@ -17,6 +22,8 @@ export default function DashboardPage() {
         </p>
         
         {/* Search Bar */}
+        {/*
+
         <div className="relative w-full max-w-2xl mb-8">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
@@ -29,6 +36,7 @@ export default function DashboardPage() {
         </div>
         
         {/* Quick Actions */}
+        {/*
         <div className="flex flex-wrap gap-3 justify-center mb-16">
           <Badge variant="outline" className="px-4 py-2 cursor-pointer hover:bg-accent">
             Chatbot For Customer Support <ArrowRight className="ml-2 h-3 w-3" />
@@ -46,6 +54,7 @@ export default function DashboardPage() {
       </div>
       
       {/* Templates Section */}
+      {/*
       <div className="px-6 pb-16">
         <h2 className="text-2xl font-semibold text-center mb-12">
           Kickstart Your SLM with Pre-Built Templates
@@ -53,6 +62,7 @@ export default function DashboardPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* API-based Agent */}
+          {/*
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <div className="flex flex-col items-center text-center mb-6">
               <div className="relative mb-4">
@@ -78,6 +88,7 @@ export default function DashboardPage() {
           </div>
           
           {/* Browser Agent */}
+          {/*
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <div className="flex flex-col items-center text-center mb-6">
               <div className="relative mb-4">
@@ -106,6 +117,7 @@ export default function DashboardPage() {
           </div>
           
           {/* Social-based Agent */}
+          {/*
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <div className="flex flex-col items-center text-center mb-6">
               <div className="relative mb-4">
@@ -136,6 +148,7 @@ export default function DashboardPage() {
       </div>
       
       {/* Models Section */}
+      {/*
       <div className="px-6 pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -144,6 +157,7 @@ export default function DashboardPage() {
           </div>
           
           {/* Table Header */}
+          {/*
           <div className="grid grid-cols-5 gap-4 py-3 px-4 bg-muted/50 rounded-t-lg text-sm font-medium text-muted-foreground">
             <div>Models</div>
             <div>Type</div>
@@ -153,6 +167,7 @@ export default function DashboardPage() {
           </div>
           
           {/* Table Rows */}
+          {/*
           <div className="border border-t-0 rounded-b-lg">
             <div className="grid grid-cols-5 gap-4 py-4 px-4 border-b last:border-b-0 hover:bg-muted/30 transition-colors">
               <div className="flex items-center gap-2">
@@ -203,7 +218,8 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
+      */}
     </div>
   )
 }
