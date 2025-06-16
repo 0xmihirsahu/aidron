@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { BoxesCore } from '@/components/ui/background-boxes'
+import { cn } from '@/lib/utils'
 const links = [
     {
         title: 'Features',
@@ -30,8 +30,16 @@ const links = [
 
 export default function FooterSection() {
     return (
-        <footer className="bg-white py-16 relative overflow-hidden">
-            <BoxesCore className="absolute -inset-150 opacity-10" />
+        <footer className="bg-white py-16 mt-20 relative overflow-hidden">
+            <div
+            className={cn(
+              "absolute opacity-25 inset-0",
+              "[background-size:7px_7px]",
+              "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
+              "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+              "rounded-[32px] sm:rounded-[64px]"
+            )}
+          />
             <div className="mx-auto z-50 max-w-5xl px-6 relative">
                 <Link
                     href="/"
