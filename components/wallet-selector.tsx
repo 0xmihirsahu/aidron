@@ -43,6 +43,7 @@ export function WalletSelector() {
     } catch {
       toast.error("Failed to copy wallet address.");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account?.address, toast]);
 
   return connected ? (
