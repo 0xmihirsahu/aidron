@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Entropy } from "@/components/ui/entropy";
@@ -9,7 +10,9 @@ import { Header } from "@/components/ui/header";
 import { cn } from "@/lib/utils";
 import { Timeline } from "@/components/ui/timeline";
 import FooterSection from "@/components/ui/footer";
-
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 export default function Home() {
   const data = [
     {
@@ -49,6 +52,34 @@ export default function Home() {
       ),
     },
   ];
+  const { connected, account } = useWallet();
+  const router = useRouter();
+  // API configuration
+const API_BASE_URL = "http://139.84.174.91:4200";
+const API_KEY = "pt8B9ghR5cIsIn16";
+
+  useEffect(() => {
+    const createUserIfNeeded = async () => {
+      if (connected && account?.address) {
+        try {
+          await fetch(`${API_BASE_URL}/users/create`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': API_KEY,
+            },
+            body: JSON.stringify({ walletAddress: account?.address.toString() }),
+          });
+        } catch (error) {
+          // Ignore error if user already exists (400)
+          console.log("User already exists: ", account?.address?.toString(),"error: ", error);
+        }
+        router.push("/app");
+      }
+    };
+    createUserIfNeeded();
+  }, [connected, router, account]);
+
   return (
     <>
       <Header />

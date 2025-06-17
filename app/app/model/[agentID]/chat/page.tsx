@@ -9,6 +9,7 @@ import { ArrowLeft, Loader2, Plus, Send, User } from "lucide-react"
 import { useRouter } from "next/navigation"
 import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
 // API configuration
 const API_BASE_URL = "http://139.84.174.91:4200";
@@ -54,7 +55,8 @@ const ChatPage = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // Hardcoded user wallet for demo - in real app this would come from authentication
-  const userWallet = "0x07dA4915Da364bFBEf7Df743523047b4BA7085f0"
+  const { account } = useWallet();
+  const userWallet = account?.address?.toString() || "";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
