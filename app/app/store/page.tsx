@@ -190,7 +190,7 @@ export default function StorePage() {
 
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Badge variant="outline" className="text-xs">
-                          {agent.tokens} tokens
+                          {agent.tokens} $AGXY
                         </Badge>
                       </div>
                     </div>

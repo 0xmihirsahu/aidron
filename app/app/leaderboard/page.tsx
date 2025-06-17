@@ -139,7 +139,7 @@ export default function LeaderboardPage() {
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
                       <DollarSign className="h-3 w-3" />
-                      Tokens
+                      AGXY
                     </span>
                     <span className="font-medium">{topAgents[1]?.tokens}</span>
                   </div>
@@ -182,7 +182,7 @@ export default function LeaderboardPage() {
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
                       <DollarSign className="h-3 w-3" />
-                      Tokens
+                      AGXY
                     </span>
                     <span className="font-medium">{topAgents[0]?.tokens}</span>
                   </div>
@@ -222,7 +222,7 @@ export default function LeaderboardPage() {
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
                       <DollarSign className="h-3 w-3" />
-                      Tokens
+                      AGXY
                     </span>
                     <span className="font-medium">{topAgents[2]?.tokens}</span>
                   </div>
