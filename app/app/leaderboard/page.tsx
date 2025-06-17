@@ -83,11 +83,11 @@ export default function LeaderboardPage() {
   const getPodiumHeight = (rank: number) => {
     switch (rank) {
       case 1:
-        return "h-32"
+        return "h-40"
       case 2:
-        return "h-24"
+        return "h-32"
       case 3:
-        return "h-20"
+        return "h-24"
       default:
         return "h-16"
     }
@@ -125,7 +125,7 @@ export default function LeaderboardPage() {
         <div className="flex justify-center items-end gap-8 max-w-4xl mx-auto">
           {/* 2nd Place */}
           <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px]">
+            <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">
                   {getRankIcon(2)}
@@ -153,14 +153,15 @@ export default function LeaderboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <div className={`bg-gradient-to-t from-gray-300 to-gray-400 ${getPodiumHeight(2)} w-24 rounded-t-lg flex items-end justify-center pb-2`}>
-              <Badge variant="secondary" className="text-xs font-bold">2nd</Badge>
+            <div className={`bg-gradient-to-t from-gray-400 via-gray-300 to-gray-200 ${getPodiumHeight(2)} w-24 rounded-t-lg flex items-end justify-center pb-2 shadow-lg relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
+              <Badge variant="secondary" className="text-xs font-bold bg-gray-600 hover:bg-gray-600 text-white">2nd</Badge>
             </div>
           </div>
 
           {/* 1st Place */}
           <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px] ring-2 ring-yellow-500/20">
+            <Card className="mb-4 min-w-[200px] shadow-xl hover:shadow-2xl transition-shadow duration-300 ring-2 ring-yellow-500/30">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">
                   {getRankIcon(1)}
@@ -188,14 +189,15 @@ export default function LeaderboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <div className={`bg-gradient-to-t from-yellow-400 to-yellow-500 ${getPodiumHeight(1)} w-24 rounded-t-lg flex items-end justify-center pb-2`}>
-              <Badge className="text-xs font-bold bg-yellow-600 hover:bg-yellow-600">1st</Badge>
+            <div className={`bg-gradient-to-t from-yellow-500 via-yellow-400 to-yellow-300 ${getPodiumHeight(1)} w-24 rounded-t-lg flex items-end justify-center pb-2 shadow-xl relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent"></div>
+              <Badge className="text-xs font-bold bg-yellow-600 hover:bg-yellow-600 text-white">1st</Badge>
             </div>
           </div>
 
           {/* 3rd Place */}
           <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px]">
+            <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">
                   {getRankIcon(3)}
@@ -223,7 +225,8 @@ export default function LeaderboardPage() {
                 </div>
               </CardContent>
             </Card>
-            <div className={`bg-gradient-to-t from-amber-500 to-amber-600 ${getPodiumHeight(3)} w-24 rounded-t-lg flex items-end justify-center pb-2`}>
+            <div className={`bg-gradient-to-t from-amber-600 via-amber-500 to-amber-400 ${getPodiumHeight(3)} w-24 rounded-t-lg flex items-end justify-center pb-2 shadow-lg relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent"></div>
               <Badge variant="secondary" className="text-xs font-bold bg-amber-700 hover:bg-amber-700 text-white">3rd</Badge>
             </div>
           </div>

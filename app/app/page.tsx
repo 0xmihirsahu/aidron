@@ -5,7 +5,7 @@ import { useEffect } from "react"
 export default function DashboardPage() {
   const router = useRouter()
   useEffect(() => {
-    router.push("/app/workshop")
+    router.push("/app/store")
   }, [router])
   return (
     <div className="flex flex-col min-h-full">

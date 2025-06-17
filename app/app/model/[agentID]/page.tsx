@@ -37,7 +37,7 @@ const Agent = () => {
       try {
         setLoading(true)
         const response = await fetch(
-          `${API_BASE_URL}/agents/${agentID}`,
+          `${API_BASE_URL}/agents/by-agent-id?agentId=${agentID}`,
           {
             headers: {
               "x-api-key": API_KEY,
