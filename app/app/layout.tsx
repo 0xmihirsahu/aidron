@@ -144,6 +144,7 @@ function SidebarNavContent() {
       <SidebarFooter>
         {connected && tokens !== null && (
           <div className="flex items-center justify-center px-4 py-2 text-xs text-muted-foreground">
+            <span className="text-muted-foreground">Balance:</span>
             <span className="font-semibold text-primary">{`${tokens} $AGXY`}</span>
           </div>
         )}
