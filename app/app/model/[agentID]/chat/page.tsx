@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import { useParams, useSearchParams } from 'next/navigation'
-import { useEffect, useState, useRef } from 'react'
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ArrowLeft, Loader2, Plus, Send, User } from "lucide-react"
-import { useRouter } from "next/navigation"
-import ReactMarkdown from 'react-markdown'
-import Image from 'next/image'
+import { useParams, useSearchParams } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ArrowLeft, Loader2, Plus, Send, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import Image from 'next/image';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
 // API configuration
-const API_BASE_URL = "http://139.84.174.91:4200";
-const API_KEY = "pt8B9ghR5cIsIn16";
+const API_BASE_URL = 'http://139.84.174.91:4200';
+const API_KEY = 'pt8B9ghR5cIsIn16';
 
 // Types
 interface Message {
-  role: "user" | "assistant";
+  role: 'user' | 'assistant';
   content: string;
   isStreaming?: boolean;
 }
@@ -28,7 +28,7 @@ interface Agent {
   description: string;
   image_url: string;
   tokens: number;
-  status: "building" | "live";
+  status: 'building' | 'live';
   domain: string | null;
   conversation_starters: string[];
   owner_wallet: string;
@@ -45,86 +45,83 @@ const TypingIndicator = () => (
 );
 
 const ChatPage = () => {
-  const { agentID } = useParams()
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [agent, setAgent] = useState<Agent | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [inputMessage, setInputMessage] = useState("")
-  const [isSending, setIsSending] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { agentID } = useParams();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [agent, setAgent] = useState<Agent | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Hardcoded user wallet for demo - in real app this would come from authentication
   const { account } = useWallet();
-  const userWallet = account?.address?.toString() || "";
+  const userWallet = account?.address?.toString() || '';
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     const fetchAgentAndInitialize = async () => {
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/agents/by-agent-id?agentId=${agentID}`,
-          {
-            headers: {
-              "x-api-key": API_KEY,
-              "accept": "*/*"
-            },
-          }
-        )
+        const response = await fetch(`${API_BASE_URL}/agents/by-agent-id?agentId=${agentID}`, {
+          headers: {
+            'x-api-key': API_KEY,
+            accept: '*/*',
+          },
+        });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch agent")
+          throw new Error('Failed to fetch agent');
         }
 
-        const data = await response.json()
-        setAgent(data)
+        const data = await response.json();
+        setAgent(data);
       } catch (err) {
-        console.error('Error fetching agent:', err)
+        console.error('Error fetching agent:', err);
       }
-    }
+    };
 
     if (agentID) {
-      fetchAgentAndInitialize()
+      fetchAgentAndInitialize();
     }
-  }, [agentID])
+  }, [agentID]);
 
   // Separate useEffect for handling initial message
   useEffect(() => {
-    const initialMessage = searchParams.get('message')
+    const initialMessage = searchParams.get('message');
     if (initialMessage && agent && messages.length === 0) {
-      console.log('Sending initial message:', decodeURIComponent(initialMessage))
-      sendMessage(decodeURIComponent(initialMessage))
+      console.log('Sending initial message:', decodeURIComponent(initialMessage));
+      sendMessage(decodeURIComponent(initialMessage));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [agent, searchParams, messages])
+  }, [agent, searchParams, messages]);
 
   const sendMessage = async (content: string) => {
     if (!content.trim() || !agent) return;
 
     try {
-      setIsSending(true)
-      console.log('Sending message:', content)
-      
+      setIsSending(true);
+      console.log('Sending message:', content);
+
       // Add user message to chat
-      const userMessage: Message = { role: "user", content }
-      const newMessages = [...messages, userMessage]
-      setMessages(newMessages)
-      setInputMessage("")
+      const userMessage: Message = { role: 'user', content };
+      const newMessages = [...messages, userMessage];
+      setMessages(newMessages);
+      setInputMessage('');
 
       // Add temporary assistant message with streaming state
-      const tempAssistantMessage: Message = { 
-        role: "assistant", 
-        content: "", 
-        isStreaming: true 
-      }
-      setMessages([...newMessages, tempAssistantMessage])
+      const tempAssistantMessage: Message = {
+        role: 'assistant',
+        content: '',
+        isStreaming: true,
+      };
+      setMessages([...newMessages, tempAssistantMessage]);
 
       // Send to API
       const response = await fetch(`${API_BASE_URL}/chat`, {
@@ -136,8 +133,8 @@ const ChatPage = () => {
         body: JSON.stringify({
           agent_id: agent.id,
           user_wallet: userWallet,
-          chat_history: newMessages
-        })
+          chat_history: newMessages,
+        }),
       });
 
       if (!response.ok) {
@@ -145,41 +142,41 @@ const ChatPage = () => {
       }
 
       const data = await response.json();
-      console.log('Received response:', data.response)
-      
+      console.log('Received response:', data.response);
+
       // Simulate streaming for demo (in production, use actual streaming endpoint)
       const words = data.response.split(' ');
       let streamedContent = '';
-      
+
       for (let i = 0; i < words.length; i++) {
         streamedContent += (i > 0 ? ' ' : '') + words[i];
-        setMessages(prev => {
+        setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {
-            role: "assistant",
+            role: 'assistant',
             content: streamedContent,
-            isStreaming: i < words.length - 1
+            isStreaming: i < words.length - 1,
           };
           return updated;
         });
         // Add a small delay between words
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     } catch (err) {
-      console.error('Error sending message:', err)
+      console.error('Error sending message:', err);
       // Remove the temporary message on error
-      setMessages(prev => prev.slice(0, -1))
+      setMessages((prev) => prev.slice(0, -1));
     } finally {
-      setIsSending(false)
+      setIsSending(false);
     }
-  }
+  };
 
   if (!agent) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
-    )
+    );
   }
 
   return (
@@ -214,9 +211,7 @@ const ChatPage = () => {
             </div>
           </div>
         </div>
-        <Badge variant={agent.status === "live" ? "default" : "secondary"}>
-          {agent.status}
-        </Badge>
+        <Badge variant={agent.status === 'live' ? 'default' : 'secondary'}>{agent.status}</Badge>
       </div>
 
       {/* Chat Messages */}
@@ -225,67 +220,65 @@ const ChatPage = () => {
           <div
             key={index}
             className={`flex items-start ${
-              message.role === "user" ? "justify-end" : "justify-start"
+              message.role === 'user' ? 'justify-end' : 'justify-start'
             }`}
           >
             {message.isStreaming ? (
               <TypingIndicator />
             ) : (
-              <div className={`flex items-start gap-3 max-w-[80%] ${
-                message.role === "user" ? "flex-row-reverse" : "flex-row"
-              }`}>
+              <div
+                className={`flex items-start gap-3 max-w-[80%] ${
+                  message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
+                }`}
+              >
                 {/* Avatar */}
                 <div className="flex-shrink-0">
-                  {message.role === "user" ? (
+                  {message.role === 'user' ? (
                     <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                       <User className="w-5 h-5 text-primary-foreground" />
                     </div>
+                  ) : agent.image_url ? (
+                    <Image
+                      src={agent.image_url}
+                      alt={agent.name}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
                   ) : (
-                    agent.image_url ? (
-                      <Image
-                        src={agent.image_url}
-                        alt={agent.name}
-                        width={32}
-                        height={32}
-                        className="rounded-full"
-                      />
-                    ) : (
-                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                        <span className="text-lg font-semibold text-muted-foreground">
-                          {agent.name.charAt(0)}
-                        </span>
-                      </div>
-                    )
+                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                      <span className="text-lg font-semibold text-muted-foreground">
+                        {agent.name.charAt(0)}
+                      </span>
+                    </div>
                   )}
                 </div>
 
                 {/* Message Content */}
                 <div
                   className={`rounded-lg p-4 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                    message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
                   }`}
                 >
                   <ReactMarkdown
                     components={{
-                      strong: (props) => (
-                        <span className="font-bold text-foreground" {...props} />
-                      ),
-                      ul: (props) => (
-                        <ul className="list-disc space-y-1 ml-4" {...props} />
-                      ),
-                      ol: (props) => (
-                        <ol className="list-decimal space-y-1 ml-4" {...props} />
-                      ),
-                      li: (props) => (
-                        <li className="leading-relaxed" {...props} />
-                      ),
+                      strong: (props) => <span className="font-bold text-foreground" {...props} />,
+                      ul: (props) => <ul className="list-disc space-y-1 ml-4" {...props} />,
+                      ol: (props) => <ol className="list-decimal space-y-1 ml-4" {...props} />,
+                      li: (props) => <li className="leading-relaxed" {...props} />,
                       p: (props) => (
-                        <p className="whitespace-pre-wrap leading-relaxed mb-4 last:mb-0" {...props} />
+                        <p
+                          className="whitespace-pre-wrap leading-relaxed mb-4 last:mb-0"
+                          {...props}
+                        />
                       ),
                       a: (props) => (
-                        <a className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />
+                        <a
+                          className="text-blue-500 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          {...props}
+                        />
                       ),
                       code: (props) => (
                         <code className="bg-muted/50 rounded px-1 py-0.5" {...props} />
@@ -318,13 +311,13 @@ const ChatPage = () => {
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                sendMessage(inputMessage)
+                e.preventDefault();
+                sendMessage(inputMessage);
               }
             }}
             disabled={isSending}
           />
-          <Button 
+          <Button
             onClick={() => sendMessage(inputMessage)}
             disabled={isSending || !inputMessage.trim()}
             size="icon"
@@ -339,7 +332,7 @@ const ChatPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChatPage
+export default ChatPage;

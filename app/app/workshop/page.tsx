@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Search, ArrowRight, ExternalLink } from "lucide-react"
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Search, ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function DashboardPage() {
   return (
@@ -12,22 +12,25 @@ export default function DashboardPage() {
           Launch Your Custom Specialized AI Agent
         </h1>
         <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
-          Bring your AI ideas to life with our SLM builder. Build and tokenize
-          your custom model effortlessly
+          Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model
+          effortlessly
         </p>
-        
+
         {/* Search Bar */}
         <div className="relative w-full max-w-2xl mb-8">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
+          <Input
             placeholder="Tell Assisterr what to build for you..."
             className="pl-12 pr-12 h-12 text-base"
           />
-          <Button size="icon" className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8">
+          <Button
+            size="icon"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8"
+          >
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
-        
+
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3 justify-center mb-16">
           <Badge variant="outline" className="px-4 py-2 cursor-pointer hover:bg-accent">
@@ -44,13 +47,13 @@ export default function DashboardPage() {
           </Badge>
         </div>
       </div>
-      
+
       {/* Templates Section */}
       <div className="px-6 pb-16">
         <h2 className="text-2xl font-semibold text-center mb-12">
           Kickstart Your SLM with Pre-Built Templates
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* API-based Agent */}
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
@@ -59,24 +62,32 @@ export default function DashboardPage() {
                 <div className="w-32 h-24 bg-muted rounded-lg flex items-center justify-center">
                   <div className="space-y-2">
                     <div className="flex justify-center space-x-2">
-                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">1</div>
-                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">2</div>
-                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">3</div>
+                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">
+                        1
+                      </div>
+                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">
+                        2
+                      </div>
+                      <div className="w-6 h-6 rounded-full border-2 border-muted-foreground flex items-center justify-center text-xs">
+                        3
+                      </div>
                     </div>
-                    <div className="bg-primary text-primary-foreground px-3 py-1 rounded text-xs font-medium">API</div>
-                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">* * * * * *</div>
+                    <div className="bg-primary text-primary-foreground px-3 py-1 rounded text-xs font-medium">
+                      API
+                    </div>
+                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">
+                      * * * * * *
+                    </div>
                   </div>
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                 API-based Agent <ExternalLink className="h-4 w-4" />
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Smart agent using external APIs
-              </p>
+              <p className="text-sm text-muted-foreground">Smart agent using external APIs</p>
             </div>
           </div>
-          
+
           {/* Browser Agent */}
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <div className="flex flex-col items-center text-center mb-6">
@@ -92,19 +103,19 @@ export default function DashboardPage() {
                         <div className="w-4 h-4 bg-primary-foreground rounded"></div>
                       </div>
                     </div>
-                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">task</div>
+                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">
+                      task
+                    </div>
                   </div>
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                 Browser Agent <ExternalLink className="h-4 w-4" />
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Smart agent using browser
-              </p>
+              <p className="text-sm text-muted-foreground">Smart agent using browser</p>
             </div>
           </div>
-          
+
           {/* Social-based Agent */}
           <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
             <div className="flex flex-col items-center text-center mb-6">
@@ -120,7 +131,9 @@ export default function DashboardPage() {
                       <div className="w-6 h-6 bg-primary rounded-full"></div>
                       <div className="w-6 h-6 rounded-full border-2 border-muted-foreground"></div>
                     </div>
-                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">publish</div>
+                    <div className="border border-muted-foreground rounded px-2 py-1 text-xs">
+                      publish
+                    </div>
                   </div>
                 </div>
               </div>
@@ -134,7 +147,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      
+
       {/* Models Section */}
       <div className="px-6 pb-16">
         <div className="max-w-6xl mx-auto">
@@ -142,7 +155,7 @@ export default function DashboardPage() {
             <h2 className="text-xl font-semibold">My models</h2>
             <span className="text-sm text-muted-foreground">6/10</span>
           </div>
-          
+
           {/* Table Header */}
           <div className="grid grid-cols-5 gap-4 py-3 px-4 bg-muted/50 rounded-t-lg text-sm font-medium text-muted-foreground">
             <div>Models</div>
@@ -151,12 +164,14 @@ export default function DashboardPage() {
             <div>Treasury</div>
             <div>Socials</div>
           </div>
-          
+
           {/* Table Rows */}
           <div className="border border-t-0 rounded-b-lg">
             <div className="grid grid-cols-5 gap-4 py-4 px-4 border-b last:border-b-0 hover:bg-muted/30 transition-colors">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">1</div>
+                <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">
+                  1
+                </div>
                 <span className="text-sm">🔥</span>
               </div>
               <div className="flex items-center gap-2">
@@ -177,10 +192,12 @@ export default function DashboardPage() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-5 gap-4 py-4 px-4 hover:bg-muted/30 transition-colors">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">1</div>
+                <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">
+                  1
+                </div>
                 <span className="text-sm">🔥</span>
               </div>
               <div className="flex items-center gap-2">
@@ -205,5 +222,5 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

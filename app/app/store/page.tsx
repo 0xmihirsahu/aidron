@@ -1,10 +1,10 @@
-"use client";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+'use client';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { User, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
   Pagination,
   PaginationContent,
@@ -12,11 +12,11 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination';
 
 // API configuration
-const API_BASE_URL = "http://139.84.174.91:4200";
-const API_KEY = "pt8B9ghR5cIsIn16";
+const API_BASE_URL = 'http://139.84.174.91:4200';
+const API_KEY = 'pt8B9ghR5cIsIn16';
 
 // Types
 interface Agent {
@@ -25,7 +25,7 @@ interface Agent {
   description: string;
   image_url: string;
   tokens: number;
-  status: "building" | "live";
+  status: 'building' | 'live';
   domain: string | null;
   conversation_starters: string[];
   owner_wallet: string;
@@ -39,11 +39,11 @@ interface AgentsResponse {
 
 // Categories based on domains
 const categories = [
-  { id: "web3", label: "Web3", icon: "🌐" },
-  { id: "defi", label: "DeFi", icon: "💎" },
-  { id: "crypto", label: "Crypto", icon: "₿" },
-  { id: "tax", label: "Tax", icon: "📊" },
-  { id: "support", label: "Support", icon: "🎯" },
+  { id: 'web3', label: 'Web3', icon: '🌐' },
+  { id: 'defi', label: 'DeFi', icon: '💎' },
+  { id: 'crypto', label: 'Crypto', icon: '₿' },
+  { id: 'tax', label: 'Tax', icon: '📊' },
+  { id: 'support', label: 'Support', icon: '🎯' },
 ];
 
 export default function StorePage() {
@@ -56,18 +56,15 @@ export default function StorePage() {
   const fetchAgents = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${API_BASE_URL}/agents?page=${page}&limit=20`,
-        {
-          headers: {
-            "x-api-key": API_KEY,
-            "accept": "*/*"
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/agents?page=${page}&limit=20`, {
+        headers: {
+          'x-api-key': API_KEY,
+          accept: '*/*',
+        },
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch agents");
+        throw new Error('Failed to fetch agents');
       }
 
       const data: AgentsResponse = await response.json();
@@ -75,7 +72,7 @@ export default function StorePage() {
       // Assuming 20 items per page, calculate total pages
       setTotalPages(Math.ceil(parseInt(data.limit) / 20));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -97,11 +94,11 @@ export default function StorePage() {
           /> */}
       <div
         className={cn(
-          "absolute opacity-10 inset-0",
-          "[background-size:5px_5px]",
-          "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
-          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
-          "rounded-[32px] sm:rounded-[64px]"
+          'absolute opacity-10 inset-0',
+          '[background-size:5px_5px]',
+          '[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]',
+          'dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]',
+          'rounded-[32px] sm:rounded-[64px]'
         )}
       />
       {/* Header */}
@@ -114,8 +111,7 @@ export default function StorePage() {
 
         <h1 className="text-4xl font-bold mb-4">Explore the SLM Store</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Discover a wide range of Small Language Models, carefully curated for
-          your specific needs
+          Discover a wide range of Small Language Models, carefully curated for your specific needs
         </p>
       </div>
 
@@ -161,19 +157,17 @@ export default function StorePage() {
                             className="w-full h-full object-cover rounded-xl"
                           />
                         ) : (
-                          "🤖"
+                          '🤖'
                         )}
                       </div>
                       <div className="flex-1 space-y-3">
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg font-semibold">
-                            {agent.name}
-                          </CardTitle>
+                          <CardTitle className="text-lg font-semibold">{agent.name}</CardTitle>
                           <Badge
-                            variant={agent.status === "live" ? "default" : "secondary"}
+                            variant={agent.status === 'live' ? 'default' : 'secondary'}
                             className="text-xs"
                           >
-                            {agent.status === "live" ? "Live" : "Building"}
+                            {agent.status === 'live' ? 'Live' : 'Building'}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
@@ -182,7 +176,7 @@ export default function StorePage() {
                       </div>
                     </div>
                   </CardHeader>
-                  
+
                   <CardContent className="pt-0">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -193,7 +187,7 @@ export default function StorePage() {
                           {agent.owner_wallet.slice(0, 6)}...{agent.owner_wallet.slice(-4)}
                         </span>
                       </div>
-                      
+
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Badge variant="outline" className="text-xs">
                           {agent.tokens} tokens
@@ -210,18 +204,18 @@ export default function StorePage() {
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationPrevious 
+                    <PaginationPrevious
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
                         if (currentPage > 1) {
-                          setCurrentPage(p => p - 1);
+                          setCurrentPage((p) => p - 1);
                         }
                       }}
-                      className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                      className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
                     />
                   </PaginationItem>
-                  
+
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                     <PaginationItem key={page}>
                       <PaginationLink
@@ -238,15 +232,15 @@ export default function StorePage() {
                   ))}
 
                   <PaginationItem>
-                    <PaginationNext 
+                    <PaginationNext
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
                         if (currentPage < totalPages) {
-                          setCurrentPage(p => p + 1);
+                          setCurrentPage((p) => p + 1);
                         }
                       }}
-                      className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                      className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
                     />
                   </PaginationItem>
                 </PaginationContent>

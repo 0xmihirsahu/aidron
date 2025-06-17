@@ -1,6 +1,6 @@
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const NotFound = () => {
   return (
@@ -22,20 +22,17 @@ const NotFound = () => {
             priority
           />
         </div>
-        
+
         <div className="text-center space-y-3">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-            404
-          </h1>
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
-            Page Not Found
-          </h2>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">404</h1>
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200">Page Not Found</h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-md">
-            We&apos;ve searched high and low, but couldn&apos;t find the page you&apos;re looking for.
+            We&apos;ve searched high and low, but couldn&apos;t find the page you&apos;re looking
+            for.
           </p>
         </div>
 
-        <Link 
+        <Link
           href="/"
           className="px-6 font-semibold py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg transition-colors duration-200"
         >
@@ -43,7 +40,7 @@ const NotFound = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

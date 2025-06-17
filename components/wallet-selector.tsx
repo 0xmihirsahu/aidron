@@ -1,17 +1,23 @@
-"use client";
+'use client';
 
 // Internal components
 
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
+} from '@/components/ui/dropdown-menu';
+import { toast } from 'sonner';
 import {
   APTOS_CONNECT_ACCOUNT_URL,
   AboutAptosConnect,
@@ -25,9 +31,9 @@ import {
   isInstallRequired,
   truncateAddress,
   useWallet,
-} from "@aptos-labs/wallet-adapter-react";
-import { ArrowLeft, ArrowRight, ChevronDown, Copy, LogOut, User } from "lucide-react";
-import { useCallback, useState } from "react";
+} from '@aptos-labs/wallet-adapter-react';
+import { ArrowLeft, ArrowRight, ChevronDown, Copy, LogOut, User } from 'lucide-react';
+import { useCallback, useState } from 'react';
 
 export function WalletSelector() {
   const { account, connected, disconnect, wallet } = useWallet();
@@ -39,9 +45,9 @@ export function WalletSelector() {
     if (!account?.address) return;
     try {
       await navigator.clipboard.writeText(account.address.toString());
-      toast.success("Copied wallet address to clipboard.");
+      toast.success('Copied wallet address to clipboard.');
     } catch {
-      toast.error("Failed to copy wallet address.");
+      toast.error('Failed to copy wallet address.');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account?.address, toast]);
@@ -49,7 +55,9 @@ export function WalletSelector() {
   return connected ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>{account?.ansName || truncateAddress(account?.address?.toString() || "") || "Unknown"}</Button>
+        <Button>
+          {account?.ansName || truncateAddress(account?.address?.toString() || '') || 'Unknown'}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onSelect={copyAddress} className="gap-2">
@@ -57,7 +65,12 @@ export function WalletSelector() {
         </DropdownMenuItem>
         {wallet && isAptosConnectWallet(wallet) && (
           <DropdownMenuItem asChild>
-            <a href={APTOS_CONNECT_ACCOUNT_URL} target="_blank" rel="noopener noreferrer" className="flex gap-2">
+            <a
+              href={APTOS_CONNECT_ACCOUNT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex gap-2"
+            >
               <User className="h-4 w-4" /> Account
             </a>
           </DropdownMenuItem>
@@ -83,7 +96,8 @@ interface ConnectWalletDialogProps {
 
 function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
   const { wallets = [] } = useWallet();
-  const { aptosConnectWallets, availableWallets, installableWallets } = groupAndSortWallets(wallets);
+  const { aptosConnectWallets, availableWallets, installableWallets } =
+    groupAndSortWallets(wallets);
 
   const hasAptosConnectWallets = !!aptosConnectWallets.length;
 
@@ -98,7 +112,7 @@ function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
                 <span>with Social + Aptos Connect</span>
               </>
             ) : (
-              "Connect Wallet"
+              'Connect Wallet'
             )}
           </DialogTitle>
         </DialogHeader>
@@ -109,14 +123,14 @@ function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
               <AptosConnectWalletRow key={wallet.name} wallet={wallet} onConnect={close} />
             ))}
             <p className="flex gap-1 justify-center items-center text-muted-foreground text-sm">
-              Learn more about{" "}
+              Learn more about{' '}
               <AboutAptosConnect.Trigger className="flex gap-1 py-3 items-center text-foreground">
                 Aptos Connect <ArrowRight size={16} />
               </AboutAptosConnect.Trigger>
             </p>
             <AptosPrivacyPolicy className="flex flex-col items-center py-1">
               <p className="text-xs leading-5">
-                <AptosPrivacyPolicy.Disclaimer />{" "}
+                <AptosPrivacyPolicy.Disclaimer />{' '}
                 <AptosPrivacyPolicy.Link className="text-muted-foreground underline underline-offset-4" />
                 <span className="text-muted-foreground">.</span>
               </p>
@@ -203,7 +217,9 @@ function renderEducationScreen(screen: AboutAptosConnectEducationScreen) {
         <Button variant="ghost" size="icon" onClick={screen.cancel}>
           <ArrowLeft />
         </Button>
-        <DialogTitle className="leading-snug text-base text-center">About Aptos Connect</DialogTitle>
+        <DialogTitle className="leading-snug text-base text-center">
+          About Aptos Connect
+        </DialogTitle>
       </DialogHeader>
 
       <div className="flex h-[162px] pb-3 items-end justify-center">
@@ -226,7 +242,7 @@ function renderEducationScreen(screen: AboutAptosConnectEducationScreen) {
           ))}
         </div>
         <Button size="sm" variant="ghost" onClick={screen.next} className="gap-2 justify-self-end">
-          {screen.screenIndex === screen.totalScreens - 1 ? "Finish" : "Next"}
+          {screen.screenIndex === screen.totalScreens - 1 ? 'Finish' : 'Next'}
           <ArrowRight size={16} />
         </Button>
       </div>

@@ -1,5 +1,5 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
 const loading = () => {
   return (
@@ -26,12 +26,10 @@ const loading = () => {
             />
           </div>
         </div>
-        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
-          Loading...
-        </p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">Loading...</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default loading
+export default loading;
