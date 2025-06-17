@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function DashboardPage() {
   return (
@@ -9,14 +9,17 @@ export default function DashboardPage() {
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
         <h1 className="text-4xl font-bold tracking-tight mb-4">
-          Launch Your Custom Specialized AI Agent
+          Launch Your Custom Specialized AI Agent{' '}
+          <Badge variant="default" className="ml-auto">
+            Private Access Only
+          </Badge>
         </h1>
         <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
           Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model
           effortlessly
         </p>
 
-        {/* Search Bar */}
+        {/* Search Bar
         <div className="relative w-full max-w-2xl mb-8">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -29,7 +32,7 @@ export default function DashboardPage() {
           >
             <ArrowRight className="h-4 w-4" />
           </Button>
-        </div>
+        </div> */}
 
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3 justify-center mb-16">
@@ -52,6 +55,9 @@ export default function DashboardPage() {
       <div className="px-6 pb-16">
         <h2 className="text-2xl font-semibold text-center mb-12">
           Kickstart Your SLM with Pre-Built Templates
+          <Badge variant="secondary" className="ml-auto">
+            Private Access Only
+          </Badge>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -153,7 +159,7 @@ export default function DashboardPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold">My models</h2>
-            <span className="text-sm text-muted-foreground">6/10</span>
+            <span className="text-sm text-muted-foreground">0/10</span>
           </div>
 
           {/* Table Header */}
@@ -167,7 +173,7 @@ export default function DashboardPage() {
 
           {/* Table Rows */}
           <div className="border border-t-0 rounded-b-lg">
-            <div className="grid grid-cols-5 gap-4 py-4 px-4 border-b last:border-b-0 hover:bg-muted/30 transition-colors">
+            {/* <div className="grid grid-cols-5 gap-4 py-4 px-4 border-b last:border-b-0 hover:bg-muted/30 transition-colors">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">
                   1
@@ -191,33 +197,7 @@ export default function DashboardPage() {
                   <span className="text-lg">⋮</span>
                 </Button>
               </div>
-            </div>
-
-            <div className="grid grid-cols-5 gap-4 py-4 px-4 hover:bg-muted/30 transition-colors">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-orange-500 rounded text-white text-xs flex items-center justify-center">
-                  1
-                </div>
-                <span className="text-sm">🔥</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full border-2 border-dashed border-muted-foreground"></div>
-                <span className="text-sm">Draft</span>
-              </div>
-              <div className="flex items-center gap-1 text-sm">
-                <span>👥</span>
-                <span>0</span>
-              </div>
-              <div className="flex items-center gap-1 text-sm">
-                <span>💰</span>
-                <span>0 $ASRR</span>
-              </div>
-              <div className="flex justify-end">
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <span className="text-lg">⋮</span>
-                </Button>
-              </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

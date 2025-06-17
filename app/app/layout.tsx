@@ -121,7 +121,7 @@ function SidebarNavContent() {
                 <BarChart3 className="h-4 w-4" />
                 <span>Data Market</span>
                 <Badge variant="secondary" className="ml-auto">
-                  soon
+                  Soon
                 </Badge>
               </Link>
             </SidebarMenuButton>
@@ -133,7 +133,7 @@ function SidebarNavContent() {
                 <Users className="h-4 w-4" />
                 <span>Contribute & Earn</span>
                 <Badge variant="secondary" className="ml-auto">
-                  soon
+                  Soon
                 </Badge>
               </Link>
             </SidebarMenuButton>
