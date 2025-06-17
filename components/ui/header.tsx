@@ -3,9 +3,9 @@
 import * as React from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
 
 import Link from "next/link"
+import { WalletSelector } from "../wallet-selector"
 
 export function Header() {
   const router = useRouter()
@@ -63,9 +63,7 @@ export function Header() {
 
         {/* Connect Wallet Button */}
         <div className="flex items-center">
-          <Button variant="default">
-            Connect Wallet
-          </Button>
+          <WalletSelector />
         </div>
       </div>
     </header>

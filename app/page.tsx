@@ -183,11 +183,11 @@ export default function Home() {
             )}
           />
           <div className="flex flex-col items-center justify-center gap-2">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-100">721</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-100">124+</h1>
             <h4 className="text-2xl sm:text-3xl text-neutral-300">SLMs is live</h4>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-100">150+</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-100">476+</h1>
             <h4 className="text-2xl sm:text-3xl text-neutral-300">Users</h4>
           </div>
         </div>
