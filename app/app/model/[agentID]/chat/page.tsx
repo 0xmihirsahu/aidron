@@ -100,6 +100,7 @@ const ChatPage = () => {
       console.log('Sending initial message:', decodeURIComponent(initialMessage))
       sendMessage(decodeURIComponent(initialMessage))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agent, searchParams, messages])
 
   const sendMessage = async (content: string) => {
