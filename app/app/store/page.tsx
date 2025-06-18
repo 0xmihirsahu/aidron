@@ -12,6 +12,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis,
 } from '@/components/ui/pagination';
 import { useRouter } from 'next/navigation';
 import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
@@ -31,6 +32,7 @@ interface Agent {
 interface AgentsResponse {
   page: string;
   limit: string;
+  total: string;
   agents: Agent[];
 }
 
@@ -61,8 +63,8 @@ export default function StorePage() {
 
       const data: AgentsResponse = await response.json();
       setAgents(data.agents);
-      // Assuming 20 items per page, calculate total pages
-      setTotalPages(Math.ceil(parseInt(data.limit) / 20));
+      // Calculate total pages based on total count
+      setTotalPages(Math.ceil(parseInt(data.total) / 20));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -209,20 +211,72 @@ export default function StorePage() {
                     />
                   </PaginationItem>
 
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <PaginationItem key={page}>
+                  {/* First page */}
+                  <PaginationItem>
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentPage(1);
+                      }}
+                      isActive={currentPage === 1}
+                    >
+                      1
+                    </PaginationLink>
+                  </PaginationItem>
+
+                  {/* Left ellipsis */}
+                  {currentPage > 3 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                  {/* Pages around current page */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter(
+                      (page) =>
+                        page !== 1 &&
+                        page !== totalPages &&
+                        Math.abs(page - currentPage) <= 1
+                    )
+                    .map((page) => (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(page);
+                          }}
+                          isActive={currentPage === page}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                  {/* Right ellipsis */}
+                  {currentPage < totalPages - 2 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                  {/* Last page */}
+                  {totalPages > 1 && (
+                    <PaginationItem>
                       <PaginationLink
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          setCurrentPage(page);
+                          setCurrentPage(totalPages);
                         }}
-                        isActive={currentPage === page}
+                        isActive={currentPage === totalPages}
                       >
-                        {page}
+                        {totalPages}
                       </PaginationLink>
                     </PaginationItem>
-                  ))}
+                  )}
 
                   <PaginationItem>
                     <PaginationNext

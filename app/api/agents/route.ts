@@ -48,23 +48,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to fetch agents' }, { status: 500 });
   }
 }
-
-export async function GETAll() {
-  try {
-    const response = await fetch(`${API_BASE_URL}/agents`, {
-      headers: {
-        'x-api-key': API_KEY || '',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error fetching agents:', error);
-    return NextResponse.json({ error: 'Failed to fetch agents' }, { status: 500 });
-  }
-}
