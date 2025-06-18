@@ -13,11 +13,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-
-// API configuration
-const API_BASE_URL = 'http://139.84.174.91:4200';
-const API_KEY = 'pt8B9ghR5cIsIn16';
-
+import { useRouter } from 'next/navigation';
 // Types
 interface Agent {
   id: string;
@@ -56,12 +52,7 @@ export default function StorePage() {
   const fetchAgents = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/agents?page=${page}&limit=20`, {
-        headers: {
-          'x-api-key': API_KEY,
-          accept: '*/*',
-        },
-      });
+      const response = await fetch(`/api/agents?page=${page}&limit=20`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch agents');
@@ -77,7 +68,7 @@ export default function StorePage() {
       setLoading(false);
     }
   };
-
+  const router = useRouter();
   useEffect(() => {
     fetchAgents(currentPage);
   }, [currentPage]);
@@ -143,6 +134,7 @@ export default function StorePage() {
               {agents.map((agent) => (
                 <Card
                   key={agent.id}
+                  onClick={() => router.push(`/app/model/${agent.id}`)}
                   className="group bg-gradient-to-tr from-neutral-100 via-neutral-100 to-neutral-200 z-20 hover:shadow-md transition-all duration-200 cursor-pointer border-[1px] hover:border-primary/20"
                 >
                   <CardHeader className="pb-4">

@@ -14,9 +14,6 @@ import {
 import { Trophy, Crown, Medal, ExternalLink, Users, DollarSign, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-// API configuration
-const API_BASE_URL = 'http://139.84.174.91:4200';
-const API_KEY = 'pt8B9ghR5cIsIn16';
 
 // Types
 interface Agent {
@@ -35,6 +32,7 @@ interface AgentsResponse {
   page: string;
   limit: string;
   agents: Agent[];
+  error?: string;
 }
 
 export default function LeaderboardPage() {
@@ -42,25 +40,26 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
   const fetchAgents = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/agents?page=1&limit=20`, {
-        headers: {
-          'x-api-key': API_KEY,
-          accept: '*/*',
-        },
-      });
+      const response = await fetch(`/api/agents?page=1&limit=20`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch agents');
       }
 
       const data: AgentsResponse = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
       // Sort agents by tokens in descending order
       const sortedAgents = data.agents.sort((a, b) => b.tokens - a.tokens);
       setAgents(sortedAgents);
     } catch (err) {
+      console.error('Error fetching agents:', err);
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);

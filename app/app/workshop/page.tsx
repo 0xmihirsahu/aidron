@@ -1,7 +1,7 @@
 // import { Button } from '@/components/ui/button';
 // import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function DashboardPage() {
   return (
@@ -88,7 +88,8 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                API-based Agent <ExternalLink className="h-4 w-4" />
+                API-based Agent 
+                {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">Smart agent using external APIs</p>
             </div>
@@ -116,7 +117,8 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                Browser Agent <ExternalLink className="h-4 w-4" />
+                Browser Agent 
+                {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">Smart agent using browser</p>
             </div>
@@ -144,7 +146,8 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                Social-based Agent <ExternalLink className="h-4 w-4" />
+                Social-based Agent 
+                {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">
                 Posts and interacts on social platforms

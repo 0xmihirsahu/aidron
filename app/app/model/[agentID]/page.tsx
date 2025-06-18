@@ -42,8 +42,14 @@ const Agent = () => {
         }
 
         const data = await response.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        
+        // The API returns the agent directly
         setAgent(data);
       } catch (err) {
+        console.error('Error fetching agent:', err);
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setLoading(false);
@@ -105,18 +111,27 @@ const Agent = () => {
           />
         ) : (
           <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-            <span className="text-4xl font-bold text-muted-foreground">{agent.name.charAt(0)}</span>
+            <span className="text-4xl font-bold text-muted-foreground">
+              {agent.name?.charAt(0) || '?'}
+            </span>
           </div>
         )}
       </div>
 
       {/* Agent Name and Description */}
-      <h1 className="text-4xl font-bold mb-4 text-center">{agent.name}</h1>
+      <h1 className="text-4xl font-bold mb-4 text-center">{agent.name || 'Unnamed Agent'}</h1>
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sm text-muted-foreground">by</span>
-        <span className="font-medium">{`${agent.owner_wallet.slice(0, 6)}...${agent.owner_wallet.slice(-4)}`}</span>
+        <span className="font-medium">
+          {agent.owner_wallet ? 
+            `${agent.owner_wallet.slice(0, 6)}...${agent.owner_wallet.slice(-4)}` : 
+            'Unknown Owner'
+          }
+        </span>
       </div>
-      <p className="text-center text-muted-foreground mb-8 max-w-2xl">{agent.description}</p>
+      <p className="text-center text-muted-foreground mb-8 max-w-2xl">
+        {agent.description || 'No description available'}
+      </p>
 
       {/* Stats */}
       <div className="flex gap-4 mb-8">
@@ -124,10 +139,13 @@ const Agent = () => {
           Public
         </Badge>
         <Badge variant="secondary" className="px-4 py-2">
-          {`${agent.tokens.toLocaleString()} queries`}
+          {`${(agent.tokens || 0).toLocaleString()} queries`}
         </Badge>
-        <Badge variant={agent.status === 'live' ? 'default' : 'secondary'} className="px-4 py-2">
-          {agent.status}
+        <Badge 
+          variant={agent.status === 'live' ? 'default' : 'secondary'} 
+          className="px-4 py-2"
+        >
+          {agent.status || 'unknown'}
         </Badge>
       </div>
 
@@ -137,7 +155,7 @@ const Agent = () => {
 
       {/* Conversation Starters */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-8">
-        {agent.conversation_starters.map((starter, index) => (
+        {(agent.conversation_starters || []).map((starter, index) => (
           <Card
             key={index}
             className="cursor-pointer hover:bg-accent/50 transition-colors"
