@@ -68,7 +68,7 @@ export default function Home() {
         } catch {
           // Ignore error if user already exists (400)
         }
-        router.push("/app");
+        router.push('/app');
       }
     };
     createUserIfNeeded();

@@ -65,7 +65,7 @@ const ChatPage = () => {
         const response = await fetch(`/api/agents?agentId=${agentID}`);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch agent");
+          throw new Error('Failed to fetch agent');
         }
 
         const data = await response.json();
@@ -96,18 +96,18 @@ const ChatPage = () => {
     try {
       setIsSending(true);
       console.log('Sending message:', content);
-      
+
       // Add user message to chat
-      const userMessage: Message = { role: "user", content };
+      const userMessage: Message = { role: 'user', content };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
-      setInputMessage("");
+      setInputMessage('');
 
       // Add temporary assistant message with streaming state
-      const tempAssistantMessage: Message = { 
-        role: "assistant", 
-        content: "", 
-        isStreaming: true 
+      const tempAssistantMessage: Message = {
+        role: 'assistant',
+        content: '',
+        isStreaming: true,
       };
       setMessages([...newMessages, tempAssistantMessage]);
 
@@ -120,8 +120,8 @@ const ChatPage = () => {
         body: JSON.stringify({
           agent_id: agent.id,
           user_wallet: account.address.toString(),
-          chat_history: newMessages
-        })
+          chat_history: newMessages,
+        }),
       });
 
       if (!response.ok) {
@@ -132,29 +132,29 @@ const ChatPage = () => {
 
       const data = await response.json();
       console.log('Received response:', data.response);
-      
+
       // Simulate streaming for demo (in production, use actual streaming endpoint)
       const words = data.response.split(' ');
       let streamedContent = '';
-      
+
       for (let i = 0; i < words.length; i++) {
         streamedContent += (i > 0 ? ' ' : '') + words[i];
-        setMessages(prev => {
+        setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {
-            role: "assistant",
+            role: 'assistant',
             content: streamedContent,
-            isStreaming: i < words.length - 1
+            isStreaming: i < words.length - 1,
           };
           return updated;
         });
         // Add a small delay between words
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     } catch (err) {
       console.error('Error sending message:', err);
       // Remove the temporary message on error
-      setMessages(prev => prev.slice(0, -1));
+      setMessages((prev) => prev.slice(0, -1));
     } finally {
       setIsSending(false);
     }
