@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Loader2, Plus, Send, User } from 'lucide-react';
+import { ArrowLeft, Loader2, Plus, Send, User, Copy, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
@@ -31,7 +31,7 @@ interface Agent {
 }
 
 const TypingIndicator = () => (
-  <div className="flex space-x-2 p-4 bg-muted rounded-lg items-center max-w-[80%]">
+  <div className="flex space-x-2 p-3 bg-muted/50 rounded-lg items-center max-w-[80%]">
     <div className="flex space-x-1">
       <div className="w-2 h-2 bg-current rounded-full animate-[bounce_1.4s_infinite_.2s]"></div>
       <div className="w-2 h-2 bg-current rounded-full animate-[bounce_1.4s_infinite_.4s]"></div>
@@ -39,6 +39,35 @@ const TypingIndicator = () => (
     </div>
   </div>
 );
+
+const MessageCopyButton = ({ content }: { content: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  return (
+    <Button
+      size="icon"
+      variant="ghost"
+      className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity absolute top-2 right-2"
+      onClick={copyToClipboard}
+    >
+      {copied ? (
+        <Check className="h-3 w-3 text-green-500" />
+      ) : (
+        <Copy className="h-3 w-3 text-muted-foreground" />
+      )}
+    </Button>
+  );
+};
 
 const ChatPage = () => {
   const { agentID } = useParams();
@@ -169,38 +198,38 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={() => router.back()} className="p-2">
+      <div className="flex items-center justify-between p-3 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" onClick={() => router.back()} className="p-2 -ml-2">
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div className="flex items-center gap-3">
-            {agent.image_url ? (
+            {agent?.image_url ? (
               <Image
                 src={agent.image_url}
                 alt={agent.name}
-                width={40}
-                height={40}
-                className="rounded-full"
+                width={36}
+                height={36}
+                className="rounded-full ring-2 ring-muted"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                <span className="text-xl font-semibold text-muted-foreground">
-                  {agent.name.charAt(0)}
+              <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center ring-2 ring-muted">
+                <span className="text-lg font-semibold text-muted-foreground">
+                  {agent?.name.charAt(0)}
                 </span>
               </div>
             )}
             <div>
-              <h1 className="text-lg font-semibold">{agent.name}</h1>
-              <p className="text-sm text-muted-foreground">
-                {`${agent.owner_wallet.slice(0, 6)}...${agent.owner_wallet.slice(-4)}`}
+              <h1 className="text-base font-medium leading-none">{agent?.name}</h1>
+              <p className="text-xs text-muted-foreground mt-1">
+                {`${agent?.owner_wallet.slice(0, 6)}...${agent?.owner_wallet.slice(-4)}`}
               </p>
             </div>
           </div>
         </div>
-        <Badge variant={agent.status === 'live' ? 'default' : 'secondary'}>{agent.status}</Badge>
+        <Badge variant={agent?.status === 'live' ? 'default' : 'secondary'}>{agent?.status}</Badge>
       </div>
 
       {/* Chat Messages */}
@@ -208,36 +237,36 @@ const ChatPage = () => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`flex items-start ${
-              message.role === 'user' ? 'justify-end' : 'justify-start'
-            }`}
+            className={`flex items-start justify-${
+              message.role === 'user' ? 'end' : 'start'
+            } gap-2 max-w-4xl mx-auto w-full`}
           >
             {message.isStreaming ? (
               <TypingIndicator />
             ) : (
               <div
-                className={`flex items-start gap-3 max-w-[80%] ${
+                className={`flex items-start gap-2 max-w-[80%] ${
                   message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
                 }`}
               >
                 {/* Avatar */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 mt-1">
                   {message.role === 'user' ? (
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                      <User className="w-5 h-5 text-primary-foreground" />
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
+                      <User className="w-4 h-4 text-primary" />
                     </div>
-                  ) : agent.image_url ? (
+                  ) : agent?.image_url ? (
                     <Image
                       src={agent.image_url}
                       alt={agent.name}
                       width={32}
                       height={32}
-                      className="rounded-full"
+                      className="rounded-full ring-2 ring-muted"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                      <span className="text-lg font-semibold text-muted-foreground">
-                        {agent.name.charAt(0)}
+                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center ring-2 ring-muted">
+                      <span className="text-sm font-semibold text-muted-foreground">
+                        {agent?.name.charAt(0)}
                       </span>
                     </div>
                   )}
@@ -245,10 +274,11 @@ const ChatPage = () => {
 
                 {/* Message Content */}
                 <div
-                  className={`rounded-lg p-4 ${
-                    message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
+                  className={`rounded-2xl px-4 py-2.5 relative group ${
+                    message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted/50'
                   }`}
                 >
+                  {message.role === 'assistant' && <MessageCopyButton content={message.content} />}
                   <ReactMarkdown
                     components={{
                       strong: (props) => <span className="font-bold text-foreground" {...props} />,
@@ -288,14 +318,14 @@ const ChatPage = () => {
       </div>
 
       {/* Message Input */}
-      <div className="p-4 border-t">
-        <div className="flex gap-2">
+      <div className="p-4 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex gap-2 max-w-4xl mx-auto">
           <Button variant="outline" size="icon" className="shrink-0">
             <Plus className="h-4 w-4" />
           </Button>
           <Input
             type="text"
-            placeholder={`Message ${agent.name}...`}
+            placeholder={`Message ${agent?.name}...`}
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -305,6 +335,7 @@ const ChatPage = () => {
               }
             }}
             disabled={isSending}
+            className="min-h-10"
           />
           <Button
             onClick={() => sendMessage(inputMessage)}
