@@ -236,9 +236,7 @@ export default function StorePage() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1)
                     .filter(
                       (page) =>
-                        page !== 1 &&
-                        page !== totalPages &&
-                        Math.abs(page - currentPage) <= 1
+                        page !== 1 && page !== totalPages && Math.abs(page - currentPage) <= 1
                     )
                     .map((page) => (
                       <PaginationItem key={page}>
