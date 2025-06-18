@@ -20,6 +20,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   isStreaming?: boolean;
+  isError?: boolean;
 }
 
 interface Agent {
@@ -127,7 +128,6 @@ const ChatPage = () => {
   useEffect(() => {
     const initialMessage = searchParams.get('message');
     if (initialMessage && agent && messages.length === 0) {
-      console.log('Sending initial message:', decodeURIComponent(initialMessage));
       sendMessage(decodeURIComponent(initialMessage));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,7 +138,6 @@ const ChatPage = () => {
 
     try {
       setIsSending(true);
-      console.log('Sending message:', content);
 
       // Add user message to chat
       const userMessage: Message = { role: 'user', content };
@@ -167,14 +166,16 @@ const ChatPage = () => {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Chat API error:', errorData);
-        throw new Error(errorData.error || 'Failed to send message');
-      }
-
       const data = await response.json();
-      console.log('Received response:', data.response);
+
+      if (!response.ok) {
+        console.error('Chat API error:', {
+          error: data.error,
+          details: data.details,
+          status: data.status
+        });
+        throw new Error(data.error || 'Failed to send message');
+      }
 
       // Simulate streaming for demo (in production, use actual streaming endpoint)
       const words = data.response.split(' ');
@@ -198,6 +199,15 @@ const ChatPage = () => {
       console.error('Error sending message:', err);
       // Remove the temporary message on error
       setMessages((prev) => prev.slice(0, -1));
+      // Add error message to chat
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Sorry, I encountered an error while processing your message. Please try again.',
+          isError: true,
+        },
+      ]);
     } finally {
       setIsSending(false);
     }
