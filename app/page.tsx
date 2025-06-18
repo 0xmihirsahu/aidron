@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils';
 import { Timeline } from '@/components/ui/timeline';
 import FooterSection from '@/components/ui/footer';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 export default function Home() {
   const data = [
@@ -52,7 +51,6 @@ export default function Home() {
     },
   ];
   const { connected, account } = useWallet();
-  const router = useRouter();
 
   useEffect(() => {
     const createUserIfNeeded = async () => {
@@ -68,11 +66,11 @@ export default function Home() {
         } catch {
           // Ignore error if user already exists (400)
         }
-        router.push('/app');
+        // router.push('/app');
       }
     };
     createUserIfNeeded();
-  }, [connected, router, account]);
+  }, [connected, account]);
 
   return (
     <>
