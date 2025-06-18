@@ -11,10 +11,6 @@ import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
-// API configuration
-const API_BASE_URL = 'http://139.84.174.91:4200';
-const API_KEY = 'pt8B9ghR5cIsIn16';
-
 // Types
 interface Message {
   role: 'user' | 'assistant';
@@ -48,15 +44,12 @@ const ChatPage = () => {
   const { agentID } = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { account } = useWallet();
   const [agent, setAgent] = useState<Agent | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Hardcoded user wallet for demo - in real app this would come from authentication
-  const { account } = useWallet();
-  const userWallet = account?.address?.toString() || '';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -69,15 +62,10 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchAgentAndInitialize = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/agents/by-agent-id?agentId=${agentID}`, {
-          headers: {
-            'x-api-key': API_KEY,
-            accept: '*/*',
-          },
-        });
+        const response = await fetch(`/api/agents?agentId=${agentID}`);
 
         if (!response.ok) {
-          throw new Error('Failed to fetch agent');
+          throw new Error("Failed to fetch agent");
         }
 
         const data = await response.json();
@@ -103,69 +91,70 @@ const ChatPage = () => {
   }, [agent, searchParams, messages]);
 
   const sendMessage = async (content: string) => {
-    if (!content.trim() || !agent) return;
+    if (!content.trim() || !agent || !account?.address) return;
 
     try {
       setIsSending(true);
       console.log('Sending message:', content);
-
+      
       // Add user message to chat
-      const userMessage: Message = { role: 'user', content };
+      const userMessage: Message = { role: "user", content };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
-      setInputMessage('');
+      setInputMessage("");
 
       // Add temporary assistant message with streaming state
-      const tempAssistantMessage: Message = {
-        role: 'assistant',
-        content: '',
-        isStreaming: true,
+      const tempAssistantMessage: Message = { 
+        role: "assistant", 
+        content: "", 
+        isStreaming: true 
       };
       setMessages([...newMessages, tempAssistantMessage]);
 
       // Send to API
-      const response = await fetch(`${API_BASE_URL}/chat`, {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': API_KEY,
         },
         body: JSON.stringify({
           agent_id: agent.id,
-          user_wallet: userWallet,
-          chat_history: newMessages,
-        }),
+          user_wallet: account.address.toString(),
+          chat_history: newMessages
+        })
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        const errorData = await response.json();
+        console.error('Chat API error:', errorData);
+        throw new Error(errorData.error || 'Failed to send message');
       }
 
       const data = await response.json();
       console.log('Received response:', data.response);
-
+      
       // Simulate streaming for demo (in production, use actual streaming endpoint)
       const words = data.response.split(' ');
       let streamedContent = '';
-
+      
       for (let i = 0; i < words.length; i++) {
         streamedContent += (i > 0 ? ' ' : '') + words[i];
-        setMessages((prev) => {
+        setMessages(prev => {
           const updated = [...prev];
           updated[updated.length - 1] = {
-            role: 'assistant',
+            role: "assistant",
             content: streamedContent,
-            isStreaming: i < words.length - 1,
+            isStreaming: i < words.length - 1
           };
           return updated;
         });
         // Add a small delay between words
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        await new Promise(resolve => setTimeout(resolve, 50));
       }
     } catch (err) {
       console.error('Error sending message:', err);
       // Remove the temporary message on error
-      setMessages((prev) => prev.slice(0, -1));
+      setMessages(prev => prev.slice(0, -1));
     } finally {
       setIsSending(false);
     }

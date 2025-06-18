@@ -10,10 +10,6 @@ import { ArrowLeft, Loader2, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-// API configuration
-const API_BASE_URL = 'http://139.84.174.91:4200';
-const API_KEY = 'pt8B9ghR5cIsIn16';
-
 // Types
 interface Agent {
   id: string;
@@ -39,12 +35,7 @@ const Agent = () => {
     const fetchAgent = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/agents/by-agent-id?agentId=${agentID}`, {
-          headers: {
-            'x-api-key': API_KEY,
-            accept: '*/*',
-          },
-        });
+        const response = await fetch(`/api/agents?agentId=${agentID}`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch agent');

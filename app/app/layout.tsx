@@ -26,20 +26,13 @@ function SidebarNavContent() {
   const { open } = useSidebar();
   const router = useRouter();
   const [tokens, setTokens] = useState<number | null>(null);
-  const API_BASE_URL = 'http://139.84.174.91:4200';
-  const API_KEY = 'pt8B9ghR5cIsIn16';
   const { account, connected } = useWallet();
 
   useEffect(() => {
     const fetchTokens = async () => {
       if (connected && account?.address) {
         try {
-          const res = await fetch(
-            `${API_BASE_URL}/users?walletAddress=${account?.address?.toString()}`,
-            {
-              headers: { 'x-api-key': API_KEY },
-            }
-          );
+          const res = await fetch(`/api/users?walletAddress=${account?.address?.toString()}`);
           if (res.ok) {
             const data = await res.json();
             setTokens(data.tokens);

@@ -53,27 +53,22 @@ export default function Home() {
   ];
   const { connected, account } = useWallet();
   const router = useRouter();
-  // API configuration
-  const API_BASE_URL = 'http://139.84.174.91:4200';
-  const API_KEY = 'pt8B9ghR5cIsIn16';
 
   useEffect(() => {
     const createUserIfNeeded = async () => {
       if (connected && account?.address) {
         try {
-          await fetch(`${API_BASE_URL}/users/create`, {
+          await fetch('/api/users/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'x-api-key': API_KEY,
             },
-            body: JSON.stringify({ walletAddress: account?.address.toString() }),
+            body: JSON.stringify({ walletAddress: account.address }),
           });
-        } catch (error) {
+        } catch {
           // Ignore error if user already exists (400)
-          console.log('User already exists: ', account?.address?.toString(), 'error: ', error);
         }
-        router.push('/app');
+        router.push("/app");
       }
     };
     createUserIfNeeded();
