@@ -13,6 +13,7 @@ import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import React from 'react';
+import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
 
 // Types
 interface Message {
@@ -46,12 +47,10 @@ interface MarkdownProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 const TypingIndicator = () => (
-  <div className="flex space-x-2 p-3 bg-muted/50 rounded-lg items-center max-w-[80%]">
-    <div className="flex space-x-1">
-      <div className="w-2 h-2 bg-current rounded-full animate-[bounce_1.4s_infinite_.2s]"></div>
-      <div className="w-2 h-2 bg-current rounded-full animate-[bounce_1.4s_infinite_.4s]"></div>
-      <div className="w-2 h-2 bg-current rounded-full animate-[bounce_1.4s_infinite]"></div>
-    </div>
+  <div className="flex items-center space-x-2 animate-pulse">
+    <div className="w-2 h-2 rounded-full bg-primary/50"></div>
+    <div className="w-2 h-2 rounded-full bg-primary/50 animation-delay-200"></div>
+    <div className="w-2 h-2 rounded-full bg-primary/50 animation-delay-400"></div>
   </div>
 );
 
@@ -221,21 +220,21 @@ const ChatPage = () => {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div className="flex items-center gap-3">
-            {agent?.image_url ? (
-              <Image
-                src={agent.image_url}
-                alt={agent.name}
-                width={36}
-                height={36}
-                className="rounded-full ring-2 ring-muted"
-              />
-            ) : (
-              <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center ring-2 ring-muted">
-                <span className="text-lg font-semibold text-muted-foreground">
-                  {agent?.name.charAt(0)}
+            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+              {agent?.image_url && !isPlaceholderUrl(agent.image_url) ? (
+                <Image
+                  src={agent.image_url}
+                  alt={agent.name}
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-full"
+                />
+              ) : (
+                <span className="text-xl text-muted-foreground">
+                  {getRandomBotEmoji()}
                 </span>
-              </div>
-            )}
+              )}
+            </div>
             <div>
               <h1 className="text-base font-medium leading-none">{agent?.name}</h1>
               <p className="text-xs text-muted-foreground mt-1">
@@ -270,18 +269,18 @@ const ChatPage = () => {
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
                       <User className="w-4 h-4 text-primary" />
                     </div>
-                  ) : agent?.image_url ? (
+                  ) : agent?.image_url && !isPlaceholderUrl(agent.image_url) ? (
                     <Image
                       src={agent.image_url}
                       alt={agent.name}
                       width={32}
                       height={32}
-                      className="rounded-full ring-2 ring-muted"
+                      className="w-8 h-8 rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center ring-2 ring-muted">
-                      <span className="text-sm font-semibold text-muted-foreground">
-                        {agent?.name.charAt(0)}
+                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                      <span className="text-lg text-muted-foreground">
+                        {getRandomBotEmoji()}
                       </span>
                     </div>
                   )}

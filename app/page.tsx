@@ -195,7 +195,7 @@ export default function Home() {
               <h1 className="font-inter text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
                 Bridging AI and Human Economy with{' '}
                 <span className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 bg-clip-text text-transparent">
-                  $XY
+                  $AGXY
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl">

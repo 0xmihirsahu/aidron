@@ -14,6 +14,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { useRouter } from 'next/navigation';
+import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
 // Types
 interface Agent {
   id: string;
@@ -140,7 +141,7 @@ export default function StorePage() {
                   <CardHeader className="pb-4">
                     <div className="flex items-start gap-4">
                       <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
-                        {agent.image_url ? (
+                        {agent.image_url && !isPlaceholderUrl(agent.image_url) ? (
                           <Image
                             src={agent.image_url}
                             alt={agent.name}
@@ -149,7 +150,7 @@ export default function StorePage() {
                             className="w-full h-full object-cover rounded-xl"
                           />
                         ) : (
-                          '🤖'
+                          getRandomBotEmoji()
                         )}
                       </div>
                       <div className="flex-1 space-y-3">

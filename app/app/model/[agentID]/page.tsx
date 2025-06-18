@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, Loader2, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
 
 // Types
 interface Agent {
@@ -101,7 +102,7 @@ const Agent = () => {
 
       {/* Agent Logo */}
       <div className="mb-6">
-        {agent.image_url ? (
+        {agent.image_url && !isPlaceholderUrl(agent.image_url) ? (
           <Image
             src={agent.image_url}
             width={96}
@@ -112,7 +113,7 @@ const Agent = () => {
         ) : (
           <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
             <span className="text-4xl font-bold text-muted-foreground">
-              {agent.name?.charAt(0) || '?'}
+              {getRandomBotEmoji()}
             </span>
           </div>
         )}

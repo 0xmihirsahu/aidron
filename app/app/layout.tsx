@@ -137,7 +137,8 @@ function SidebarNavContent() {
       <SidebarFooter>
         {connected && tokens !== null && (
           <div className="flex items-center justify-center px-4 py-2 text-xs text-muted-foreground">
-            <span className="text-muted-foreground">Balance:</span>
+            <Image src="/agenxy-logo-black.svg" alt="AGXY" width={12} height={12} />
+            <span className="text-muted-foreground ml-1">Balance:</span>
             <span className="font-semibold text-primary">{`${tokens} $AGXY`}</span>
           </div>
         )}

@@ -11,9 +11,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Trophy, Crown, Medal, ExternalLink, Users, DollarSign, Loader2 } from 'lucide-react';
+import { Trophy, Crown, Medal, ExternalLink, Users, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
 
 // Types
 interface Agent {
@@ -127,7 +129,19 @@ export default function LeaderboardPage() {
             <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(2)}</div>
-                <div className="text-2xl mb-2">{topAgents[1]?.image_url ? '🤖' : '🤖'}</div>
+                <div className="text-2xl mb-2">
+                  {topAgents[1]?.image_url && !isPlaceholderUrl(topAgents[1].image_url) ? (
+                    <Image
+                      src={topAgents[1].image_url}
+                      alt={topAgents[1].name}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-full mx-auto"
+                    />
+                  ) : (
+                    getRandomBotEmoji()
+                  )}
+                </div>
                 <h3 className="font-semibold text-sm mb-1">{topAgents[1]?.name}</h3>
                 <p className="text-xs text-muted-foreground">
                   {topAgents[1]?.owner_wallet.slice(0, 6)}...{topAgents[1]?.owner_wallet.slice(-4)}
@@ -137,8 +151,14 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <DollarSign className="h-3 w-3" />
-                      AGXY
+                      <Image 
+                        src="/agenxy-logo-black.svg" 
+                        alt="AGXY" 
+                        width={12} 
+                        height={12} 
+                        className="dark:invert"
+                      />
+                      $AGXY
                     </span>
                     <span className="font-medium">{topAgents[1]?.tokens}</span>
                   </div>
@@ -170,7 +190,19 @@ export default function LeaderboardPage() {
             <Card className="mb-4 min-w-[200px] shadow-xl hover:shadow-2xl transition-shadow duration-300 ring-2 ring-yellow-500/30">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(1)}</div>
-                <div className="text-3xl mb-2">{topAgents[0]?.image_url ? '🤖' : '🤖'}</div>
+                <div className="text-3xl mb-2">
+                  {topAgents[0]?.image_url && !isPlaceholderUrl(topAgents[0].image_url) ? (
+                    <Image
+                      src={topAgents[0].image_url}
+                      alt={topAgents[0].name}
+                      width={56}
+                      height={56}
+                      className="w-14 h-14 rounded-full mx-auto"
+                    />
+                  ) : (
+                    getRandomBotEmoji()
+                  )}
+                </div>
                 <h3 className="font-semibold mb-1">{topAgents[0]?.name}</h3>
                 <p className="text-xs text-muted-foreground">
                   {topAgents[0]?.owner_wallet.slice(0, 6)}...{topAgents[0]?.owner_wallet.slice(-4)}
@@ -180,8 +212,14 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <DollarSign className="h-3 w-3" />
-                      AGXY
+                      <Image 
+                        src="/agenxy-logo-black.svg" 
+                        alt="AGXY" 
+                        width={12} 
+                        height={12} 
+                        className="dark:invert"
+                      />
+                      $AGXY
                     </span>
                     <span className="font-medium">{topAgents[0]?.tokens}</span>
                   </div>
@@ -210,7 +248,19 @@ export default function LeaderboardPage() {
             <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(3)}</div>
-                <div className="text-2xl mb-2">{topAgents[2]?.image_url ? '🤖' : '🤖'}</div>
+                <div className="text-2xl mb-2">
+                  {topAgents[2]?.image_url && !isPlaceholderUrl(topAgents[2].image_url) ? (
+                    <Image
+                      src={topAgents[2].image_url}
+                      alt={topAgents[2].name}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-full mx-auto"
+                    />
+                  ) : (
+                    getRandomBotEmoji()
+                  )}
+                </div>
                 <h3 className="font-semibold text-sm mb-1">{topAgents[2]?.name}</h3>
                 <p className="text-xs text-muted-foreground">
                   {topAgents[2]?.owner_wallet.slice(0, 6)}...{topAgents[2]?.owner_wallet.slice(-4)}
@@ -220,8 +270,14 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <DollarSign className="h-3 w-3" />
-                      AGXY
+                      <Image 
+                        src="/agenxy-logo-black.svg" 
+                        alt="AGXY" 
+                        width={12} 
+                        height={12}
+                        className="dark:invert"
+                      />
+                      $AGXY
                     </span>
                     <span className="font-medium">{topAgents[2]?.tokens}</span>
                   </div>
@@ -279,17 +335,36 @@ export default function LeaderboardPage() {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">🤖</span>
+                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                        {agent.image_url && !isPlaceholderUrl(agent.image_url) ? (
+                          <Image
+                            src={agent.image_url}
+                            alt={agent.name}
+                            width={32}
+                            height={32}
+                            className="w-8 h-8 rounded-full"
+                          />
+                        ) : (
+                          <span className="text-lg">{getRandomBotEmoji()}</span>
+                        )}
+                      </div>
                       <div>
-                        <div className="font-medium text-sm">{agent.name}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="font-medium">{agent.name}</div>
+                        <div className="text-sm text-muted-foreground">
                           {agent.owner_wallet.slice(0, 6)}...{agent.owner_wallet.slice(-4)}
                         </div>
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <span className="font-medium">{agent.tokens}</span>
+                  <TableCell className="flex items-center gap-1">
+                    <Image 
+                      src="/agenxy-logo-black.svg" 
+                      alt="AGXY" 
+                      width={12} 
+                      height={12}
+                      className="dark:invert"
+                    />
+                    {agent.tokens}
                   </TableCell>
                   <TableCell>
                     <Badge
