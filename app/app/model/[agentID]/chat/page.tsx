@@ -10,6 +10,9 @@ import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import React from 'react';
 
 // Types
 interface Message {
@@ -28,6 +31,18 @@ interface Agent {
   domain: string | null;
   conversation_starters: string[];
   owner_wallet: string;
+}
+
+interface MarkdownProps extends React.ComponentPropsWithoutRef<'div'> {
+  node?: {
+    tagName?: string;
+    properties?: {
+      className?: string[];
+    };
+  };
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 const TypingIndicator = () => (
@@ -281,30 +296,119 @@ const ChatPage = () => {
                   {message.role === 'assistant' && <MessageCopyButton content={message.content} />}
                   <ReactMarkdown
                     components={{
-                      strong: (props) => <span className="font-bold text-foreground" {...props} />,
-                      ul: (props) => <ul className="list-disc space-y-1 ml-4" {...props} />,
-                      ol: (props) => <ol className="list-decimal space-y-1 ml-4" {...props} />,
-                      li: (props) => <li className="leading-relaxed" {...props} />,
-                      p: (props) => (
-                        <p
-                          className="whitespace-pre-wrap leading-relaxed mb-4 last:mb-0"
+                      strong: (props) => (
+                        <span className="font-semibold text-foreground" {...props} />
+                      ),
+                      ul: (props) => <ul className="my-4 list-disc space-y-2 pl-6" {...props} />,
+                      ol: (props) => <ol className="my-4 list-decimal space-y-2 pl-6" {...props} />,
+                      li: (props) => (
+                        <li className="leading-relaxed marker:text-muted-foreground" {...props} />
+                      ),
+                      h1: (props) => (
+                        <h1
+                          className="text-2xl font-bold mt-6 mb-4 text-foreground/90"
+                          {...props}
+                        />
+                      ),
+                      h2: (props) => (
+                        <h2
+                          className="text-xl font-semibold mt-5 mb-3 text-foreground/90"
+                          {...props}
+                        />
+                      ),
+                      h3: (props) => (
+                        <h3
+                          className="text-lg font-medium mt-4 mb-2 text-foreground/90"
                           {...props}
                         />
                       ),
                       a: (props) => (
                         <a
-                          className="text-blue-500 hover:underline"
+                          className="text-primary underline underline-offset-4 hover:text-primary/80 transition-colors"
                           target="_blank"
                           rel="noopener noreferrer"
                           {...props}
                         />
                       ),
-                      code: (props) => (
-                        <code className="bg-muted/50 rounded px-1 py-0.5" {...props} />
+                      blockquote: (props) => (
+                        <blockquote className="mt-4 border-l-4 border-primary/10 pl-4 italic text-muted-foreground">
+                          {props.children}
+                        </blockquote>
                       ),
-                      pre: (props) => (
-                        <pre className="bg-muted/50 rounded p-2 overflow-x-auto my-2" {...props} />
+                      hr: () => <hr className="my-4 border-muted" />,
+                      table: (props) => (
+                        <div className="my-4 w-full overflow-y-auto">
+                          <table className="w-full border-collapse text-sm" {...props} />
+                        </div>
                       ),
+                      thead: (props) => <thead className="border-b" {...props} />,
+                      tr: (props) => <tr className="border-b border-muted/20 m-0 p-0" {...props} />,
+                      th: (props) => (
+                        <th
+                          className="border border-muted/20 px-4 py-2 text-left font-bold"
+                          {...props}
+                        />
+                      ),
+                      td: (props) => (
+                        <td className="border border-muted/20 px-4 py-2 text-left" {...props} />
+                      ),
+                      code: ({ inline, className, children, ...props }: MarkdownProps) => {
+                        if (!children) return null;
+
+                        const match = /language-(\w+)/.exec(className || '');
+                        const language = match ? match[1] : '';
+
+                        if (inline) {
+                          return (
+                            <code
+                              className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm"
+                              {...props}
+                            >
+                              {children}
+                            </code>
+                          );
+                        }
+
+                        const content = String(children).replace(/\n$/, '');
+
+                        return (
+                          <div className="not-prose relative my-4">
+                            <MessageCopyButton content={content} />
+                            <div className="overflow-x-auto">
+                              <SyntaxHighlighter
+                                language={language}
+                                style={oneDark}
+                                customStyle={{
+                                  margin: 0,
+                                  borderRadius: '0.5rem',
+                                  padding: '1rem',
+                                  paddingRight: '2.5rem',
+                                  fontSize: '0.875rem',
+                                  lineHeight: '1.5',
+                                  minWidth: 'min-content',
+                                }}
+                                PreTag="div"
+                              >
+                                {content}
+                              </SyntaxHighlighter>
+                            </div>
+                          </div>
+                        );
+                      },
+                      pre: ({ children }) => children,
+                      p: ({ children, ...props }) => {
+                        const hasBlockElements = React.Children.toArray(children).some(
+                          (child) => React.isValidElement(child) && child.type === 'div'
+                        );
+
+                        return hasBlockElements ? (
+                          <>{children}</>
+                        ) : (
+                          <p className="whitespace-pre-wrap leading-7 mb-4 last:mb-0" {...props}>
+                            {children}
+                          </p>
+                        );
+                      },
                     }}
                   >
                     {message.content}
