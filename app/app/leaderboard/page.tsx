@@ -33,6 +33,7 @@ interface Agent {
 interface AgentsResponse {
   page: string;
   limit: string;
+  total: string;
   agents: Agent[];
   error?: string;
 }
@@ -46,23 +47,36 @@ export default function LeaderboardPage() {
   const fetchAgents = async () => {
     try {
       setLoading(true);
+
       const response = await fetch(`/api/agents?page=1&limit=20`);
 
       if (!response.ok) {
-        throw new Error('Failed to fetch agents');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Leaderboard fetch error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+        });
+        throw new Error(errorData.error || `Failed to fetch agents: ${response.status}`);
       }
 
       const data: AgentsResponse = await response.json();
+
       if (data.error) {
         throw new Error(data.error);
+      }
+
+      if (!data.agents || !Array.isArray(data.agents)) {
+        console.error('Invalid response format:', data);
+        throw new Error('Invalid response format: agents array is missing');
       }
 
       // Sort agents by tokens in descending order
       const sortedAgents = data.agents.sort((a, b) => b.tokens - a.tokens);
       setAgents(sortedAgents);
     } catch (err) {
-      console.error('Error fetching agents:', err);
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error('Error in leaderboard:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching agents');
     } finally {
       setLoading(false);
     }

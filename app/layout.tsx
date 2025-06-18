@@ -21,7 +21,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'AGENXY',
-  description: 'Affordable and Lightweight AI agents on Aptos. Build no code agents using Fast and Affordable Small Language Models in minutes.',
+  description:
+    'Affordable and Lightweight AI agents on Aptos. Build no code agents using Fast and Affordable Small Language Models in minutes.',
 };
 
 export default function RootLayout({
