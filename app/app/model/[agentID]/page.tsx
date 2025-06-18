@@ -46,7 +46,7 @@ const Agent = () => {
         if (data.error) {
           throw new Error(data.error);
         }
-        
+
         // The API returns the agent directly
         setAgent(data);
       } catch (err) {
@@ -112,9 +112,7 @@ const Agent = () => {
           />
         ) : (
           <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-            <span className="text-4xl font-bold text-muted-foreground">
-              {getRandomBotEmoji()}
-            </span>
+            <span className="text-4xl font-bold text-muted-foreground">{getRandomBotEmoji()}</span>
           </div>
         )}
       </div>
@@ -124,10 +122,9 @@ const Agent = () => {
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sm text-muted-foreground">by</span>
         <span className="font-medium">
-          {agent.owner_wallet ? 
-            `${agent.owner_wallet.slice(0, 6)}...${agent.owner_wallet.slice(-4)}` : 
-            'Unknown Owner'
-          }
+          {agent.owner_wallet
+            ? `${agent.owner_wallet.slice(0, 6)}...${agent.owner_wallet.slice(-4)}`
+            : 'Unknown Owner'}
         </span>
       </div>
       <p className="text-center text-muted-foreground mb-8 max-w-2xl">
@@ -142,10 +139,7 @@ const Agent = () => {
         <Badge variant="secondary" className="px-4 py-2">
           {`${(agent.tokens || 0).toLocaleString()} queries`}
         </Badge>
-        <Badge 
-          variant={agent.status === 'live' ? 'default' : 'secondary'} 
-          className="px-4 py-2"
-        >
+        <Badge variant={agent.status === 'live' ? 'default' : 'secondary'} className="px-4 py-2">
           {agent.status || 'unknown'}
         </Badge>
       </div>

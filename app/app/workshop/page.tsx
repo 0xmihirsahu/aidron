@@ -88,7 +88,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                API-based Agent 
+                API-based Agent
                 {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">Smart agent using external APIs</p>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                Browser Agent 
+                Browser Agent
                 {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">Smart agent using browser</p>
@@ -146,7 +146,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-                Social-based Agent 
+                Social-based Agent
                 {/* <ExternalLink className="h-4 w-4" /> */}
               </h3>
               <p className="text-sm text-muted-foreground">

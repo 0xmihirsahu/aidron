@@ -230,9 +230,7 @@ const ChatPage = () => {
                   className="w-10 h-10 rounded-full"
                 />
               ) : (
-                <span className="text-xl text-muted-foreground">
-                  {getRandomBotEmoji()}
-                </span>
+                <span className="text-xl text-muted-foreground">{getRandomBotEmoji()}</span>
               )}
             </div>
             <div>
@@ -279,9 +277,7 @@ const ChatPage = () => {
                     />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                      <span className="text-lg text-muted-foreground">
-                        {getRandomBotEmoji()}
-                      </span>
+                      <span className="text-lg text-muted-foreground">{getRandomBotEmoji()}</span>
                     </div>
                   )}
                 </div>

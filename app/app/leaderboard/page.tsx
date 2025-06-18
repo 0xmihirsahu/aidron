@@ -151,11 +151,11 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <Image 
-                        src="/agenxy-logo-black.svg" 
-                        alt="AGXY" 
-                        width={12} 
-                        height={12} 
+                      <Image
+                        src="/agenxy-logo-black.svg"
+                        alt="AGXY"
+                        width={12}
+                        height={12}
                         className="dark:invert"
                       />
                       $AGXY
@@ -212,11 +212,11 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <Image 
-                        src="/agenxy-logo-black.svg" 
-                        alt="AGXY" 
-                        width={12} 
-                        height={12} 
+                      <Image
+                        src="/agenxy-logo-black.svg"
+                        alt="AGXY"
+                        width={12}
+                        height={12}
                         className="dark:invert"
                       />
                       $AGXY
@@ -270,10 +270,10 @@ export default function LeaderboardPage() {
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1">
-                      <Image 
-                        src="/agenxy-logo-black.svg" 
-                        alt="AGXY" 
-                        width={12} 
+                      <Image
+                        src="/agenxy-logo-black.svg"
+                        alt="AGXY"
+                        width={12}
                         height={12}
                         className="dark:invert"
                       />
@@ -357,10 +357,10 @@ export default function LeaderboardPage() {
                     </div>
                   </TableCell>
                   <TableCell className="flex items-center gap-1">
-                    <Image 
-                      src="/agenxy-logo-black.svg" 
-                      alt="AGXY" 
-                      width={12} 
+                    <Image
+                      src="/agenxy-logo-black.svg"
+                      alt="AGXY"
+                      width={12}
                       height={12}
                       className="dark:invert"
                     />

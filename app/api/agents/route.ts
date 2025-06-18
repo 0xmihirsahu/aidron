@@ -11,15 +11,12 @@ export async function GET(request: NextRequest) {
 
     // If agentId is provided, fetch specific agent
     if (agentId) {
-      const response = await fetch(
-        `${API_BASE_URL}/agents/by-agent-id?agentId=${agentId}`,
-        {
-          headers: {
-            'x-api-key': API_KEY || '',
-            accept: '*/*',
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/agents/by-agent-id?agentId=${agentId}`, {
+        headers: {
+          'x-api-key': API_KEY || '',
+          accept: '*/*',
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
@@ -33,15 +30,12 @@ export async function GET(request: NextRequest) {
     const page = searchParams.get('page') || '1';
     const limit = searchParams.get('limit') || '20';
 
-    const response = await fetch(
-      `${API_BASE_URL}/agents?page=${page}&limit=${limit}`,
-      {
-        headers: {
-          'x-api-key': API_KEY || '',
-          accept: '*/*',
-        },
-      }
-    );
+    const response = await fetch(`${API_BASE_URL}/agents?page=${page}&limit=${limit}`, {
+      headers: {
+        'x-api-key': API_KEY || '',
+        accept: '*/*',
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
@@ -51,10 +45,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching agents:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch agents' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch agents' }, { status: 500 });
   }
 }
 
@@ -74,9 +65,6 @@ export async function GETAll() {
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching agents:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch agents' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch agents' }, { status: 500 });
   }
 }
