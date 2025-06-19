@@ -4,52 +4,71 @@ import Link from 'next/link';
 import { Entropy } from '@/components/ui/entropy';
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles } from 'lucide-react';
+import { Rocket, FlaskConical, Network, Coins, Sparkles, Users } from 'lucide-react';
 import Image from 'next/image';
 import { Header } from '@/components/ui/header';
 import { cn } from '@/lib/utils';
-import { Timeline } from '@/components/ui/timeline';
+// import { Timeline } from '@/components/ui/timeline';
+import { RoadmapAccordion } from '@/components/ui/roadmap-accordion';
 import FooterSection from '@/components/ui/footer';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect } from 'react';
+
+const roadmapData = [
+  {
+    title: 'Foundation',
+    date: 'Q2 2025',
+    percent: 100,
+    status: 'Completed' as const,
+    icon: <Rocket className="text-blue-700" />,
+    items: ['MVP Launch', '150 SLMs', 'Core Team'],
+  },
+  {
+    title: 'Build No-Code Lab',
+    date: 'Q3 2025',
+    percent: 10,
+    status: 'In Progress' as const,
+    icon: <Network className="text-blue-700" />,
+    items: ['No-Code Lab Launch', 'API & Social Agents', 'Early Feedback'],
+  },
+  {
+    title: 'Network Growth',
+    date: 'Q4 2025',
+    percent: 0,
+    status: 'In Progress' as const,
+    icon: <Coins className="text-blue-700" />,
+    items: ['Testnet Launch', '5K+ SLMs', '20K+ Users'],
+  },
+  {
+    title: 'Dev Onboarding',
+    date: 'Q1 2026',
+    percent: 0,
+    status: 'In Progress' as const,
+    icon: <FlaskConical className="text-blue-700" />,
+    items: ['Developer APIs Go Live', 'Host Hackathons & Grants', 'Developer Onboarding'],
+  },
+  {
+    title: 'Mainnet Launch',
+    date: 'Q2 2026',
+    percent: 20,
+    status: 'In Progress' as const,
+    icon: <Users className="text-blue-700" />,
+    items: ['Mainnet Launch', '30K+ SLMs', '500K+ Users'],
+  },
+  // {
+  //   title: "Mixture of Agents",
+  //   date: "Q1 2026",
+  //   percent: 0,
+  //   status: "Planned" as const,
+  //   icon: <Users className="text-gray-500" />,
+  //   items: [
+  //     "Mixture of Experts",
+  //     "50k SLMs"
+  //   ]
+  // }
+];
+
 export default function Home() {
-  const data = [
-    {
-      title: 'Q3 2025',
-      content: (
-        <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
-            Built and launched Aceternity UI and Aceternity UI Pro from scratch
-          </p>
-        </div>
-      ),
-    },
-    {
-      title: 'Q4 2025',
-      content: (
-        <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
-            I usually run out of copy, but when I see content this big, I try to integrate lorem
-            ipsum.
-          </p>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
-            Lorem ipsum is for people who are too lazy to write copy. But we are not. Here are some
-            more example of beautiful designs I built.
-          </p>
-        </div>
-      ),
-    },
-    {
-      title: 'Q1 2026',
-      content: (
-        <div>
-          <p className="mb-4 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
-            Deployed 5 new components on Aceternity today
-          </p>
-        </div>
-      ),
-    },
-  ];
   const { connected, account } = useWallet();
 
   useEffect(() => {
@@ -96,17 +115,17 @@ export default function Home() {
 
             <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight mb-4 sm:mb-6">
               Build & Deploy
-              <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 bg-clip-text text-transparent">
                 {' '}
-                Specialized AI Agents{' '}
+                No-Code AI Agents{' '}
               </span>
-              in Minutes
+              on Aptos
             </h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
-              Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model
-              effortlessly. Create agents that understand your specific domain and deliver
-              exceptional results.
+              Build 15× Cheaper with Small Language Models. Lightweight, Affordable AI tailored for
+              every use case. Deploy domain-specific agents that deliver exceptional results—in just
+              minutes.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12">
@@ -197,12 +216,12 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl">
-                Where artificial intelligence meets human potential. Create, collaborate, and
-                capitalize on the future of work.
+                The native currency of decentralized AI on Aptos — create, collaborate, and
+                capitalize on your agents.
               </p>
             </div>
             <Image
-              src="/latest-adam-hands.svg"
+              src="/agenxy-cover-dark-blue.svg"
               alt="AI and Human Collaboration"
               width={2400}
               height={1000}
@@ -246,7 +265,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8">
-          <Timeline data={data} />
+          <RoadmapAccordion data={roadmapData} />
         </div>
       </div>
       <FooterSection />

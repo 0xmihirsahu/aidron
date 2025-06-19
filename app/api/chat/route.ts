@@ -7,10 +7,7 @@ const API_KEY = process.env.API_KEY;
 export async function POST(request: Request) {
   try {
     if (!API_BASE_URL || !API_KEY) {
-      return NextResponse.json(
-        { error: 'API configuration is missing' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'API configuration is missing' }, { status: 500 });
     }
 
     const body = await request.json();
@@ -29,7 +26,7 @@ export async function POST(request: Request) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': API_KEY,
-        'accept': '*/*',
+        accept: '*/*',
       },
       body: JSON.stringify({ agent_id, user_wallet, chat_history }),
       cache: 'no-store',
@@ -40,10 +37,10 @@ export async function POST(request: Request) {
 
     if (!res.ok) {
       return NextResponse.json(
-        { 
+        {
           error: data.error || 'Failed to process chat request',
           details: data.details || null,
-          status: res.status
+          status: res.status,
         },
         { status: res.status }
       );
@@ -52,9 +49,9 @@ export async function POST(request: Request) {
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
-      { 
+      {
         error: error instanceof Error ? error.message : 'Failed to process chat request',
-        details: error instanceof Error ? error.stack : null
+        details: error instanceof Error ? error.stack : null,
       },
       { status: 500 }
     );

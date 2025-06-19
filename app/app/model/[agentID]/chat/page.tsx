@@ -172,7 +172,7 @@ const ChatPage = () => {
         console.error('Chat API error:', {
           error: data.error,
           details: data.details,
-          status: data.status
+          status: data.status,
         });
         throw new Error(data.error || 'Failed to send message');
       }
