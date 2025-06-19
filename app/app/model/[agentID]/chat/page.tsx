@@ -224,57 +224,64 @@ const ChatPage = () => {
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between p-3 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between p-2 sm:p-3 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Button variant="ghost" onClick={() => router.back()} className="p-2 -ml-2">
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-muted flex items-center justify-center">
               {agent?.image_url && !isPlaceholderUrl(agent.image_url) ? (
                 <Image
                   src={agent.image_url}
                   alt={agent.name}
                   width={40}
                   height={40}
-                  className="w-10 h-10 rounded-full"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full"
                 />
               ) : (
-                <span className="text-xl text-muted-foreground">{getRandomBotEmoji()}</span>
+                <span className="text-lg sm:text-xl text-muted-foreground">
+                  {getRandomBotEmoji()}
+                </span>
               )}
             </div>
             <div>
-              <h1 className="text-base font-medium leading-none">{agent?.name}</h1>
+              <h1 className="text-sm sm:text-base font-medium leading-none">{agent?.name}</h1>
               <p className="text-xs text-muted-foreground mt-1">
                 {`${agent?.owner_wallet.slice(0, 6)}...${agent?.owner_wallet.slice(-4)}`}
               </p>
             </div>
           </div>
         </div>
-        <Badge variant={agent?.status === 'live' ? 'default' : 'secondary'}>{agent?.status}</Badge>
+        <Badge
+          variant={agent?.status === 'live' ? 'default' : 'secondary'}
+          className="text-xs sm:text-sm"
+        >
+          {agent?.status}
+        </Badge>
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 sm:space-y-6">
         {messages.map((message, index) => (
           <div
             key={index}
             className={`flex items-start justify-${
               message.role === 'user' ? 'end' : 'start'
-            } gap-2 max-w-4xl mx-auto w-full`}
+            } gap-2 max-w-full sm:max-w-4xl mx-auto w-full`}
           >
             {message.isStreaming ? (
               <TypingIndicator />
             ) : (
               <div
-                className={`flex items-start gap-2 max-w-[80%] ${
+                className={`flex items-start gap-2 max-w-[90vw] sm:max-w-[80%] ${
                   message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
                 }`}
               >
                 {/* Avatar */}
                 <div className="flex-shrink-0 mt-1">
                   {message.role === 'user' ? (
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
                       <User className="w-4 h-4 text-primary" />
                     </div>
                   ) : agent?.image_url && !isPlaceholderUrl(agent.image_url) ? (
@@ -283,20 +290,23 @@ const ChatPage = () => {
                       alt={agent.name}
                       width={32}
                       height={32}
-                      className="w-8 h-8 rounded-full"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                      <span className="text-lg text-muted-foreground">{getRandomBotEmoji()}</span>
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-muted flex items-center justify-center">
+                      <span className="text-base sm:text-lg text-muted-foreground">
+                        {getRandomBotEmoji()}
+                      </span>
                     </div>
                   )}
                 </div>
 
                 {/* Message Content */}
                 <div
-                  className={`rounded-2xl px-4 py-2.5 relative group ${
+                  className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 relative group text-sm sm:text-base ${
                     message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted/50'
                   }`}
+                  style={{ wordBreak: 'break-word', maxWidth: '70vw', minWidth: 0 }}
                 >
                   {message.role === 'assistant' && <MessageCopyButton content={message.content} />}
                   <ReactMarkdown

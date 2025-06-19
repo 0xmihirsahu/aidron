@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Loader2, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Loader2, MessageCircle, Share2, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
@@ -31,6 +31,7 @@ const Agent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [inputMessage, setInputMessage] = useState('');
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const fetchAgent = async () => {
@@ -70,6 +71,17 @@ const Agent = () => {
     }
   };
 
+  // Share handler
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
@@ -93,10 +105,13 @@ const Agent = () => {
   return (
     <div className="flex flex-col items-center min-h-full p-4 max-w-4xl mx-auto">
       {/* Back Button */}
-      <div className="w-full mb-4">
+      <div className="w-full mb-4 flex items-center justify-between">
         <Button onClick={() => router.back()} variant="ghost" className="gap-2">
           <ArrowLeft className="h-4 w-4" />
           Back
+        </Button>
+        <Button onClick={handleShare} variant="outline" size="icon" className="ml-auto">
+          {copied ? <Check className="h-4 w-4 text-green-500" /> : <Share2 className="h-4 w-4" />}
         </Button>
       </div>
 
