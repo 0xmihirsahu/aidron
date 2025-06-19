@@ -127,20 +127,22 @@ export default function LeaderboardPage() {
   const topAgents = agents.slice(0, 3);
 
   return (
-    <div className="flex flex-col min-h-full p-6">
+    <div className="flex flex-col min-h-full p-2 sm:p-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Leaderboard</h1>
-        <p className="text-muted-foreground">Top performing AI agents ranked by tokens</p>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Leaderboard</h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
+          Top performing AI agents ranked by tokens
+        </p>
       </div>
 
       {/* Top 3 Podium */}
-      <div className="mb-12">
-        <h2 className="text-xl font-semibold mb-6 text-center">Top 3 Agents</h2>
-        <div className="flex justify-center items-end gap-8 max-w-4xl mx-auto">
+      <div className="mb-8 sm:mb-12">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-center">Top 3 Agents</h2>
+        <div className="flex flex-col sm:flex-row justify-center items-end gap-4 sm:gap-8 max-w-full sm:max-w-4xl mx-auto">
           {/* 2nd Place */}
-          <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="flex flex-col items-center w-full sm:w-auto">
+            <Card className="mb-4 min-w-[180px] sm:min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(2)}</div>
                 <div className="text-2xl mb-2">
@@ -200,8 +202,8 @@ export default function LeaderboardPage() {
           </div>
 
           {/* 1st Place */}
-          <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px] shadow-xl hover:shadow-2xl transition-shadow duration-300 ring-2 ring-yellow-500/30">
+          <div className="flex flex-col items-center w-full sm:w-auto">
+            <Card className="mb-4 min-w-[180px] sm:min-w-[200px] shadow-xl hover:shadow-2xl transition-shadow duration-300 ring-2 ring-yellow-500/30">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(1)}</div>
                 <div className="text-3xl mb-2">
@@ -258,8 +260,8 @@ export default function LeaderboardPage() {
           </div>
 
           {/* 3rd Place */}
-          <div className="flex flex-col items-center">
-            <Card className="mb-4 min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="flex flex-col items-center w-full sm:w-auto">
+            <Card className="mb-4 min-w-[180px] sm:min-w-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-2">{getRankIcon(3)}</div>
                 <div className="text-2xl mb-2">
@@ -321,91 +323,92 @@ export default function LeaderboardPage() {
       </div>
 
       {/* All Agents Table */}
-      <div className="max-w-6xl mx-auto w-full">
-        <h2 className="text-xl font-semibold mb-6">All Agents</h2>
-
+      <div className="max-w-full sm:max-w-6xl mx-auto w-full overflow-x-auto">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">All Agents</h2>
         <Card>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Rank</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Tokens</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Domain</TableHead>
-                <TableHead>Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {agents.map((agent, index) => (
-                <TableRow key={agent.id} className={index < 3 ? 'bg-muted/50' : ''}>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {index < 3 ? getRankIcon(index + 1) : null}
-                      <span className="text-sm font-medium text-muted-foreground">
-                        #{index + 1}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                        {agent.image_url && !isPlaceholderUrl(agent.image_url) ? (
-                          <Image
-                            src={agent.image_url}
-                            alt={agent.name}
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-full"
-                          />
-                        ) : (
-                          <span className="text-lg">{getRandomBotEmoji()}</span>
-                        )}
+          <div className="overflow-x-auto">
+            <Table className="min-w-[600px]">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Rank</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Tokens</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Domain</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {agents.map((agent, index) => (
+                  <TableRow key={agent.id} className={index < 3 ? 'bg-muted/50' : ''}>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        {index < 3 ? getRankIcon(index + 1) : null}
+                        <span className="text-sm font-medium text-muted-foreground">
+                          #{index + 1}
+                        </span>
                       </div>
-                      <div>
-                        <div className="font-medium">{agent.name}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {agent.owner_wallet.slice(0, 6)}...{agent.owner_wallet.slice(-4)}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                          {agent.image_url && !isPlaceholderUrl(agent.image_url) ? (
+                            <Image
+                              src={agent.image_url}
+                              alt={agent.name}
+                              width={32}
+                              height={32}
+                              className="w-8 h-8 rounded-full"
+                            />
+                          ) : (
+                            <span className="text-lg">{getRandomBotEmoji()}</span>
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-medium">{agent.name}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {agent.owner_wallet.slice(0, 6)}...{agent.owner_wallet.slice(-4)}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="flex items-center gap-1">
-                    <Image
-                      src="/agenxy-logo-black.svg"
-                      alt="AGXY"
-                      width={12}
-                      height={12}
-                      className="dark:invert"
-                    />
-                    {agent.tokens}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={agent.status === 'live' ? 'default' : 'secondary'}
-                      className="text-xs"
-                    >
-                      {agent.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">{agent.domain || 'N/A'}</span>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => router.push(`/app/model/${agent.id}`)}
-                      className="gap-2"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                      Try Agent
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    </TableCell>
+                    <TableCell className="flex items-center gap-1">
+                      <Image
+                        src="/agenxy-logo-black.svg"
+                        alt="AGXY"
+                        width={12}
+                        height={12}
+                        className="dark:invert"
+                      />
+                      {agent.tokens}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={agent.status === 'live' ? 'default' : 'secondary'}
+                        className="text-xs"
+                      >
+                        {agent.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm text-muted-foreground">{agent.domain || 'N/A'}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => router.push(`/app/model/${agent.id}`)}
+                        className="gap-2"
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                        Try Agent
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </Card>
       </div>
     </div>
