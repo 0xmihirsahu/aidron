@@ -20,11 +20,6 @@ import Image from 'next/image';
 import { WalletSelector } from '@/components/wallet-selector';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect, useState } from 'react';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Dashboard',
-};
 
 function SidebarNavContent() {
   const pathname = usePathname();

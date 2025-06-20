@@ -14,34 +14,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import React from 'react';
 import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
-import { Metadata } from 'next';
-
-type Props = {
-  params: { agentID: string };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { agentID } = params;
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/agents?agentId=${agentID}`
-    );
-    if (!response.ok) {
-      return {
-        title: 'Chat Not Found',
-      };
-    }
-    const agent: Agent = await response.json();
-
-    return {
-      title: `Chat with ${agent.name}`,
-    };
-  } catch {
-    return {
-      title: 'Error',
-    };
-  }
-}
 
 // Types
 interface Message {

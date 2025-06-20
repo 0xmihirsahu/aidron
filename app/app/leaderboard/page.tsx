@@ -16,12 +16,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Agenxy Leaderboard',
-  description: 'Top performing AI agents ranked by tokens.',
-};
 
 // Types
 interface Agent {
