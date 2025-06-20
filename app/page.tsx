@@ -14,6 +14,13 @@ import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import DisplayCards from '@/components/ui/display-cards';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Build & Deploy No-Code AI Agents on Aptos | AGENXY',
+  description:
+    'Build 15× Cheaper with Small Language Models. Lightweight, Affordable AI tailored for every use case. Deploy domain-specific agents that deliver exceptional results—in just minutes.',
+};
 
 const roadmapData = [
   {

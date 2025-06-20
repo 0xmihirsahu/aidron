@@ -10,6 +10,48 @@ import { ArrowLeft, Loader2, MessageCircle, Share2, Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { getRandomBotEmoji, isPlaceholderUrl } from '@/lib/utils';
+import { Metadata } from 'next';
+
+type Props = {
+  params: { agentID: string };
+};
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+  const { agentID } = params;
+  try {
+    // Fetch agent data
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agents?agentId=${agentID}`);
+    if (!response.ok) {
+      return {
+        title: 'Agent Not Found',
+        description: 'The requested agent could not be found.',
+      };
+    }
+    const agent: Agent = await response.json();
+
+    return {
+      title: agent.name,
+      description: agent.description,
+      openGraph: {
+        title: agent.name,
+        description: agent.description,
+        images: agent.image_url ? [agent.image_url] : [],
+      },
+      twitter: {
+        title: agent.name,
+        description: agent.description,
+        images: agent.image_url ? [agent.image_url] : [],
+      },
+    };
+  } catch {
+    return {
+      title: 'Error',
+      description: 'An error occurred while fetching agent data.',
+    };
+  }
+}
 
 // Types
 interface Agent {
@@ -24,7 +66,7 @@ interface Agent {
   owner_wallet: string;
 }
 
-const Agent = () => {
+const AgentPage = () => {
   const { agentID } = useParams();
   const router = useRouter();
   const [agent, setAgent] = useState<Agent | null>(null);
@@ -206,4 +248,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default AgentPage;

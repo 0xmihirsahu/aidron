@@ -2,6 +2,12 @@
 // import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Agenxy AI Workshop',
+  description: 'Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model effortlessly.',
+};
 
 export default function DashboardPage() {
   return (
