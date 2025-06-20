@@ -143,7 +143,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row font-inter mx-auto w-[95%] sm:w-6/8 bg-neutral-900 justify-between my-8 sm:my-12 py-6 sm:py-8 px-4 sm:px-16 rounded-[32px] sm:rounded-[55px] items-center gap-4 sm:gap-6 relative">
+        <div className="flex flex-col sm:flex-row font-mono mx-auto w-[95%] sm:w-6/8 bg-neutral-900 justify-between my-8 sm:my-12 py-6 sm:py-8 px-4 sm:px-16 rounded-[32px] sm:rounded-[55px] items-center gap-4 sm:gap-6 relative">
           <div
             className={cn(
               'absolute opacity-15 inset-0',
@@ -155,24 +155,22 @@ export default function Home() {
           />
           <div className="flex-1 space-y-4 sm:space-y-6">
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">Create Your SLM</h3>
+              <h3 className="text-lg sm:text-xl text-white font-semibold">Create Your SLM</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-                Build custom AI models tailored to your specific domain or use case, with no coding
-                required.
+              Deploy Small Language Models for specific tasks — at 1/15 times of the cost of traditional LLMs.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">Own Your Model</h3>
+              <h3 className="text-lg sm:text-xl text-white font-semibold">No Coding Required              </h3>
+              <p className="text-sm sm:text-base text-muted-foreground">
+              Build and launch AI agents without any experience in coding or machine learning.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg sm:text-xl text-white font-semibold">Own Your Model</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Maintain full ownership and control of your AI models. Deploy them anywhere and
                 monetize as you see fit.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">Monetize</h3>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                Turn your domain expertise into revenue by selling access to your specialized AI
-                models.
               </p>
             </div>
           </div>
@@ -181,22 +179,22 @@ export default function Home() {
           </div>
           <div className="flex-1 space-y-4 sm:space-y-6">
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">
-                No Technical Expertise
+              <h3 className="text-lg sm:text-xl text-white font-semibold">
+              Decentralized Agent Marketplace
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-                Our intuitive platform handles the complex technical details, letting you focus on
-                your domain knowledge.
+              Discover and monetize AI agents. Earn and own your revenue on the Aptos blockchain.
+
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">Rapid Development</h3>
+              <h3 className="text-lg sm:text-xl text-white font-semibold">Rapid Development</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Go from concept to deployment in minutes with our streamlined SLM building process.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl sm:text-2xl text-white font-semibold">Full Support</h3>
+              <h3 className="text-lg sm:text-xl text-white font-semibold">Full Support</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
                 Get comprehensive support throughout your AI journey, from model creation to
                 deployment.

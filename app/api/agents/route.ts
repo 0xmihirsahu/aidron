@@ -19,10 +19,8 @@ export async function GET(request: NextRequest) {
 
     // If agentId is provided, fetch specific agent
     if (agentId) {
-      console.log('Fetching agent by ID:', agentId);
       const url = new URL('/agents/by-agent-id', API_BASE_URL);
       url.searchParams.set('agentId', agentId);
-      console.log('Request URL:', url.toString());
 
       const response = await fetch(url.toString(), {
         method: 'GET',
