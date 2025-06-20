@@ -155,7 +155,7 @@ export default function Home() {
               'rounded-[32px] sm:rounded-[64px]'
             )}
           />
-          <div className="flex-1 space-y-4 sm:space-y-6">
+          <div className="flex-1 space-y-4 py-2 px-1 sm:px-2 sm:py-4 sm:space-y-6">
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl text-white font-semibold">Create Your SLM</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
@@ -180,7 +180,7 @@ export default function Home() {
           <div className="p-4 sm:p-8 rounded-xl">
             <Entropy size={300} className="sm:size-[400px]" />
           </div>
-          <div className="flex-1 space-y-4 sm:space-y-6">
+          <div className="flex-1 space-y-4 py-2 px-2 sm:px-2 sm:py-4 sm:space-y-6">
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl text-white font-semibold">
                 Decentralized Agent Marketplace
