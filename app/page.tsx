@@ -205,7 +205,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-screen pt-2 font-inter pb-8 sm:pb-16 relative overflow-hidden">
+        <div className="w-screen pt-2 font-inter pb-8 sm:pb-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/0 z-10" />
           <div className="relative z-20">
             <div className="px-4 sm:pl-24 z-50 m-8 sm:m-24 max-w-4xl">
@@ -232,7 +232,7 @@ export default function Home() {
         </div>
 
         {/* Featured Agents Section */}
-        <div className="mb-16 mt-16 sm:mt-24 sm:mb-24 font-inter">
+        <div className="mb-24 mt-16 sm:mt-24 sm:mb-32 font-inter sm:p-16 p-2">
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
             <DisplayCards
               cards={[
@@ -246,8 +246,8 @@ export default function Home() {
                   title: 'DocuBot',
                   description: 'Automates document analysis.',
                   date: 'Live',
-                  iconClassName: 'bg-blue-700',
-                  titleClassName: 'text-blue-700',
+                  iconClassName: 'bg-black',
+                  titleClassName: 'text-black',
                 },
               ]}
             />
@@ -263,8 +263,8 @@ export default function Home() {
                   title: 'TradeGenie',
                   description: 'Crypto trading signals insights.',
                   date: 'Live',
-                  iconClassName: 'bg-green-700',
-                  titleClassName: 'text-green-700',
+                  iconClassName: 'bg-white',
+                  titleClassName: 'text-black',
                 },
               ]}
             />
@@ -280,8 +280,8 @@ export default function Home() {
                   title: 'SupportX',
                   description: '24/7 customer support.',
                   date: 'Beta',
-                  iconClassName: 'bg-purple-700',
-                  titleClassName: 'text-purple-700',
+                  iconClassName: 'bg-white',
+                  titleClassName: 'text-black',
                 },
               ]}
             />
