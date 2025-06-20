@@ -23,7 +23,9 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { agentID } = params;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/agents?agentId=${agentID}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/agents?agentId=${agentID}`
+    );
     if (!response.ok) {
       return {
         title: 'Chat Not Found',

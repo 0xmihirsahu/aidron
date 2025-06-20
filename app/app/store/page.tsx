@@ -20,7 +20,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Agenxy SLM Store',
-  description: 'Discover a wide range of Small Language Models, carefully curated for your specific needs.',
+  description:
+    'Discover a wide range of Small Language Models, carefully curated for your specific needs.',
 };
 
 // Types

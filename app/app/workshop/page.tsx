@@ -6,7 +6,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Agenxy AI Workshop',
-  description: 'Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model effortlessly.',
+  description:
+    'Bring your AI ideas to life with our SLM builder. Build and tokenize your custom model effortlessly.',
 };
 
 export default function DashboardPage() {
