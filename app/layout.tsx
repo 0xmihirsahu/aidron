@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const title = 'AGENXY';
+const title = 'Agenxy';
 const description =
   'Affordable and Lightweight AI agents on Aptos. Build no code agents using Fast and Affordable Small Language Models in minutes.';
 // TODO: Replace with your actual domain
