@@ -8,11 +8,12 @@ import { Rocket, FlaskConical, Network, Coins, Sparkles, Users } from 'lucide-re
 import Image from 'next/image';
 import { Header } from '@/components/ui/header';
 import { cn } from '@/lib/utils';
-// import { Timeline } from '@/components/ui/timeline';
 import { RoadmapAccordion } from '@/components/ui/roadmap-accordion';
 import FooterSection from '@/components/ui/footer';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect } from 'react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import DisplayCards from '@/components/ui/display-cards';
 
 const roadmapData = [
   {
@@ -143,7 +144,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row font-mono mx-auto w-[95%] sm:w-6/8 bg-neutral-900 justify-between my-8 sm:my-12 py-6 sm:py-8 px-4 sm:px-16 rounded-[32px] sm:rounded-[55px] items-center gap-4 sm:gap-6 relative">
+        {/* Features */}
+        <div className="flex flex-col sm:flex-row font-inter mx-auto w-[95%] sm:w-6/8 bg-neutral-900 justify-between my-8 sm:my-12 py-6 sm:py-8 px-4 sm:px-16 rounded-[32px] sm:rounded-[55px] items-center gap-4 sm:gap-6 relative">
           <div
             className={cn(
               'absolute opacity-15 inset-0',
@@ -157,13 +159,14 @@ export default function Home() {
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl text-white font-semibold">Create Your SLM</h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-              Deploy Small Language Models for specific tasks — at 1/15 times of the cost of traditional LLMs.
+                Deploy Small Language Models for specific tasks — at 1/15 times of the cost of
+                traditional LLMs.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-lg sm:text-xl text-white font-semibold">No Coding Required              </h3>
+              <h3 className="text-lg sm:text-xl text-white font-semibold">No Coding Required </h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-              Build and launch AI agents without any experience in coding or machine learning.
+                Build and launch AI agents without any experience in coding or machine learning.
               </p>
             </div>
             <div className="space-y-2">
@@ -180,11 +183,10 @@ export default function Home() {
           <div className="flex-1 space-y-4 sm:space-y-6">
             <div className="space-y-2">
               <h3 className="text-lg sm:text-xl text-white font-semibold">
-              Decentralized Agent Marketplace
+                Decentralized Agent Marketplace
               </h3>
               <p className="text-sm sm:text-base text-muted-foreground">
-              Discover and monetize AI agents. Earn and own your revenue on the Aptos blockchain.
-
+                Discover and monetize AI agents. Earn and own your revenue on the Aptos blockchain.
               </p>
             </div>
             <div className="space-y-2">
@@ -203,7 +205,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-screen pt-2 pb-8 sm:pb-16 relative overflow-hidden">
+        <div className="w-screen pt-2 font-inter pb-8 sm:pb-16 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/0 z-10" />
           <div className="relative z-20">
             <div className="px-4 sm:pl-24 z-50 m-8 sm:m-24 max-w-4xl">
@@ -225,6 +227,63 @@ export default function Home() {
               height={1000}
               className="w-full z-50"
               priority
+            />
+          </div>
+        </div>
+
+        {/* Featured Agents Section */}
+        <div className="mb-16 mt-16 sm:mt-24 sm:mb-24 font-inter">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+            <DisplayCards
+              cards={[
+                {
+                  icon: (
+                    <Avatar>
+                      <AvatarImage src="/agenxy-logo-black.svg" alt="Agent 1" />
+                      <AvatarFallback>A1</AvatarFallback>
+                    </Avatar>
+                  ),
+                  title: 'DocuBot',
+                  description: 'Automates document analysis.',
+                  date: 'Live',
+                  iconClassName: 'bg-blue-700',
+                  titleClassName: 'text-blue-700',
+                },
+              ]}
+            />
+            <DisplayCards
+              cards={[
+                {
+                  icon: (
+                    <Avatar>
+                      <AvatarImage src="/agenxy-logo-white.svg" alt="Agent 2" />
+                      <AvatarFallback>A2</AvatarFallback>
+                    </Avatar>
+                  ),
+                  title: 'TradeGenie',
+                  description: 'Crypto trading signals insights.',
+                  date: 'Live',
+                  iconClassName: 'bg-green-700',
+                  titleClassName: 'text-green-700',
+                },
+              ]}
+            />
+            <DisplayCards
+              cards={[
+                {
+                  icon: (
+                    <Avatar>
+                      <AvatarImage src="/agenxy-name-black.svg" alt="Agent 3" />
+                      <AvatarFallback>A3</AvatarFallback>
+                    </Avatar>
+                  ),
+                  title: 'SupportX',
+                  description: '24/7 customer support.',
+                  date: 'Beta',
+                  iconClassName: 'bg-purple-700',
+                  titleClassName: 'text-purple-700',
+                },
+              ]}
             />
           </div>
         </div>
@@ -262,7 +321,9 @@ export default function Home() {
             <h4 className="text-2xl sm:text-3xl text-neutral-300">Users</h4>
           </div>
         </div>
-        <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8">
+
+        {/* Roadmap */}
+        <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8 font-inter">
           <RoadmapAccordion data={roadmapData} />
         </div>
       </div>

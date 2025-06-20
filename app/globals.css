@@ -122,6 +122,10 @@
   }
 }
 
+.transform-3d {
+  transform-style: preserve-3d;
+}
+
 .cpu-architecture {
   offset-anchor: 10px 0px;
   animation: animation-path;

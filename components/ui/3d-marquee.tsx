@@ -11,7 +11,10 @@ export const ThreeDMarquee = ({ images, className }: { images: string[]; classNa
   });
   return (
     <div
-      className={cn('mx-auto block h-[600px] overflow-hidden rounded-2xl max-sm:h-100', className)}
+      className={cn(
+        'mx-auto block h-[600px] overflow-hidden rounded-2xl max-sm:h-[400px]',
+        className
+      )}
     >
       <div className="flex size-full items-center justify-center">
         <div className="size-[1720px] shrink-0 scale-50 sm:scale-75 lg:scale-100">
@@ -47,7 +50,7 @@ export const ThreeDMarquee = ({ images, className }: { images: string[]; classNa
                       key={imageIndex + image}
                       src={image}
                       alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl"
+                      className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl bg-neutral-100 dark:bg-neutral-900"
                       width={970}
                       height={700}
                     />
