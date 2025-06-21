@@ -14,6 +14,7 @@ import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import DisplayCards from '@/components/ui/display-cards';
+import { formatAptosAddress } from '@/lib/utils';
 
 const roadmapData = [
   {
@@ -76,12 +77,12 @@ export default function Home() {
     const createUserIfNeeded = async () => {
       if (connected && account?.address) {
         try {
-          await fetch('/api/users/create', {
+          await fetch('/api/users', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ walletAddress: account.address }),
+            body: JSON.stringify({ walletAddress: formatAptosAddress(account.address) }),
           });
         } catch {
           // Ignore error if user already exists (400)
