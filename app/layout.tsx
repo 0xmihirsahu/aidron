@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { WalletProvider } from '@/components/wallet-provider';
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -88,6 +89,7 @@ export default function RootLayout({
         <WalletProvider>
           <Toaster richColors />
           {children}
+          <Analytics />
         </WalletProvider>
       </body>
     </html>
