@@ -148,11 +148,13 @@ export default function StorePage() {
     };
     
     initializeData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     // Fetch agents whenever currentPage changes (including page 1)
     fetchAgents(currentPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   // Generate pagination items
