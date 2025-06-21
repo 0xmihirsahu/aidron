@@ -58,7 +58,7 @@ const roadmapData = [
   },
   // {
   //   title: "Mixture of Agents",
-  //   date: "Q1 2026",
+  //   date: "Q3 2026",
   //   percent: 0,
   //   status: "Planned" as const,
   //   icon: <Users className="text-gray-500" />,

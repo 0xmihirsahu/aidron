@@ -37,6 +37,12 @@ interface AgentsResponse {
   agents: Agent[];
 }
 
+interface CountResponse {
+  count?: string | number;
+  total?: string | number;
+  [key: string]: unknown; // Allow any other properties
+}
+
 // Categories based on domains
 const categories = [
   { id: 'web3', label: 'Web3', icon: '🌐' },
@@ -46,17 +52,62 @@ const categories = [
   { id: 'support', label: 'Support', icon: '🎯' },
 ];
 
+const AGENTS_PER_PAGE = 20;
+
 export default function StorePage() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const fetchAgentsCount = async () => {
+    try {
+      const response = await fetch('/api/agents/count');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch agents count');
+      }
+
+      const data: CountResponse = await response.json();
+      
+      // Handle different possible response formats
+      let count = 0;
+      if (typeof data.count === 'string') {
+        count = parseInt(data.count);
+      } else if (typeof data.count === 'number') {
+        count = data.count;
+      } else if (typeof data.total === 'string') {
+        count = parseInt(data.total);
+      } else if (typeof data.total === 'number') {
+        count = data.total;
+      } else if (typeof data === 'number') {
+        count = data;
+      } else if (typeof data === 'string') {
+        count = parseInt(data);
+      }
+      
+      if (isNaN(count) || count < 0) {
+        console.error('Invalid count value:', count);
+        return; // Don't set invalid values
+      }
+      
+      setTotalCount(count);
+      const pages = Math.ceil(count / AGENTS_PER_PAGE);
+      setTotalPages(pages);
+    } catch (err) {
+      console.error('Error fetching agents count:', err);
+      // If count fetch fails, we'll still try to fetch agents and calculate pages from the response
+    }
+  };
 
   const fetchAgents = async (page: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/agents?page=${page}&limit=20`);
+      setError(null);
+      const url = `/api/agents?page=${page}&limit=${AGENTS_PER_PAGE}`;
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error('Failed to fetch agents');
@@ -64,18 +115,165 @@ export default function StorePage() {
 
       const data: AgentsResponse = await response.json();
       setAgents(data.agents);
-      // Calculate total pages based on total count
-      setTotalPages(Math.ceil(parseInt(data.total) / 20));
+      
+      // Only use the total from the agents response if we don't have a valid count from the count API
+      // Since the external API doesn't return total, we'll rely on the count API
+      if ((totalCount === 0 || isNaN(totalCount)) && data.total) {
+        const total = parseInt(data.total);
+        if (!isNaN(total) && total > 0) {
+          setTotalCount(total);
+          const pages = Math.ceil(total / AGENTS_PER_PAGE);
+          setTotalPages(pages);
+        }
+      }
+      
+      // If we still don't have a valid count, try to fetch it again
+      if (totalCount === 0 || isNaN(totalCount)) {
+        await fetchAgentsCount();
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
   };
+
   const router = useRouter();
+
   useEffect(() => {
+    // First fetch the count, then fetch agents
+    const initializeData = async () => {
+      await fetchAgentsCount();
+      await fetchAgents(currentPage);
+    };
+    
+    initializeData();
+  }, []);
+
+  useEffect(() => {
+    // Fetch agents whenever currentPage changes (including page 1)
     fetchAgents(currentPage);
   }, [currentPage]);
+
+  // Generate pagination items
+  const getPaginationItems = () => {
+    const items = [];
+    
+    // Previous button
+    items.push(
+      <PaginationItem key="prev">
+        <PaginationPrevious
+          onClick={() => {
+            if (currentPage > 1) {
+              setCurrentPage((p) => p - 1);
+            }
+          }}
+          className={cn(
+            currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-accent',
+            'transition-colors'
+          )}
+        />
+      </PaginationItem>
+    );
+
+    // Page numbers
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page with ellipsis
+    if (startPage > 1) {
+      items.push(
+        <PaginationItem key="1">
+          <PaginationLink
+            onClick={() => {
+              setCurrentPage(1);
+            }}
+            isActive={currentPage === 1}
+            className="cursor-pointer hover:bg-accent transition-colors"
+          >
+            1
+          </PaginationLink>
+        </PaginationItem>
+      );
+      
+      if (startPage > 2) {
+        items.push(
+          <PaginationItem key="ellipsis1">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+    }
+
+    // Visible page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      if (i === 1 && startPage > 1) continue; // Skip if already added
+      
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            onClick={() => {
+              setCurrentPage(i);
+            }}
+            isActive={currentPage === i}
+            className="cursor-pointer hover:bg-accent transition-colors"
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    // Last page with ellipsis
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        items.push(
+          <PaginationItem key="ellipsis2">
+            <PaginationEllipsis />
+          </PaginationItem>
+        );
+      }
+      
+      items.push(
+        <PaginationItem key={totalPages}>
+          <PaginationLink
+            onClick={() => {
+              setCurrentPage(totalPages);
+            }}
+            isActive={currentPage === totalPages}
+            className="cursor-pointer hover:bg-accent transition-colors"
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    // Next button
+    items.push(
+      <PaginationItem key="next">
+        <PaginationNext
+          onClick={() => {
+            if (currentPage < totalPages) {
+              setCurrentPage((p) => p + 1);
+            }
+          }}
+          className={cn(
+            currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer hover:bg-accent',
+            'transition-colors'
+          )}
+        />
+      </PaginationItem>
+    );
+
+    return items;
+  };
 
   return (
     <div className="flex flex-col min-h-full p-6 relative">
@@ -196,101 +394,20 @@ export default function StorePage() {
             </div>
 
             {/* Pagination */}
-            <div className="mt-12">
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (currentPage > 1) {
-                          setCurrentPage((p) => p - 1);
-                        }
-                      }}
-                      className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
-                    />
-                  </PaginationItem>
-
-                  {/* First page */}
-                  <PaginationItem>
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentPage(1);
-                      }}
-                      isActive={currentPage === 1}
-                    >
-                      1
-                    </PaginationLink>
-                  </PaginationItem>
-
-                  {/* Left ellipsis */}
-                  {currentPage > 3 && (
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  )}
-
-                  {/* Pages around current page */}
-                  {Array.from({ length: totalPages }, (_, i) => i + 1)
-                    .filter(
-                      (page) =>
-                        page !== 1 && page !== totalPages && Math.abs(page - currentPage) <= 1
-                    )
-                    .map((page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setCurrentPage(page);
-                          }}
-                          isActive={currentPage === page}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-
-                  {/* Right ellipsis */}
-                  {currentPage < totalPages - 2 && (
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  )}
-
-                  {/* Last page */}
-                  {totalPages > 1 && (
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setCurrentPage(totalPages);
-                        }}
-                        isActive={currentPage === totalPages}
-                      >
-                        {totalPages}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (currentPage < totalPages) {
-                          setCurrentPage((p) => p + 1);
-                        }
-                      }}
-                      className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
+            <div className="mt-12 relative z-10">
+              {/* Show pagination when we have agents and more than 1 page, or when we have a valid total count */}
+              {(totalPages > 1 || (totalCount > 0 && agents.length > 0)) && (
+                <>
+                  <div className="text-center mb-4 text-sm text-muted-foreground">
+                    Page {currentPage} of {totalPages} • {totalCount} total agents
+                  </div>
+                  <Pagination>
+                    <PaginationContent>
+                      {getPaginationItems()}
+                    </PaginationContent>
+                  </Pagination>
+                </>
+              )}
             </div>
           </>
         )}
