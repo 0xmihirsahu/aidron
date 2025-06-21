@@ -370,10 +370,11 @@ const ChatPage = () => {
                       code: ({ inline, className, children, ...props }: MarkdownProps) => {
                         if (!children) return null;
 
+                        const content = String(children);
                         const match = /language-(\w+)/.exec(className || '');
                         const language = match ? match[1] : '';
 
-                        if (inline) {
+                        if (inline || (!content.includes('\n') && !language)) {
                           return (
                             <code
                               className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm"
@@ -384,11 +385,11 @@ const ChatPage = () => {
                           );
                         }
 
-                        const content = String(children).replace(/\n$/, '');
+                        const blockContent = content.replace(/\n$/, '');
 
                         return (
-                          <div className="not-prose relative my-4">
-                            <MessageCopyButton content={content} />
+                          <span className="not-prose relative my-4 block">
+                            <MessageCopyButton content={blockContent} />
                             <div className="overflow-x-auto">
                               <SyntaxHighlighter
                                 language={language}
@@ -404,16 +405,24 @@ const ChatPage = () => {
                                 }}
                                 PreTag="div"
                               >
-                                {content}
+                                {blockContent}
                               </SyntaxHighlighter>
                             </div>
-                          </div>
+                          </span>
                         );
                       },
                       pre: ({ children }) => children,
                       p: ({ children, ...props }) => {
                         const hasBlockElements = React.Children.toArray(children).some(
-                          (child) => React.isValidElement(child) && child.type === 'div'
+                          (child) => 
+                            React.isValidElement(child) && 
+                            (child.type === 'div' || 
+                             (child.type === 'span' && typeof child.props === 'object' && child.props && 'className' in child.props && typeof child.props.className === 'string' && child.props.className.includes('not-prose')) ||
+                             child.type === 'pre' ||
+                             child.type === 'table' ||
+                             child.type === 'blockquote' ||
+                             child.type === 'ul' ||
+                             child.type === 'ol')
                         );
 
                         return hasBlockElements ? (

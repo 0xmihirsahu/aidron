@@ -20,6 +20,8 @@ import Image from 'next/image';
 import { WalletSelector } from '@/components/wallet-selector';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { useEffect, useState } from 'react';
+import { formatAptosAddress } from '@/lib/utils';
+import { toast } from 'sonner';
 
 function SidebarNavContent() {
   const pathname = usePathname();
@@ -30,22 +32,40 @@ function SidebarNavContent() {
 
   useEffect(() => {
     const fetchTokens = async () => {
-      if (connected && account?.address) {
-        try {
-          const res = await fetch(`/api/users?walletAddress=${account?.address?.toString()}`);
-          if (res.ok) {
-            const data = await res.json();
-            setTokens(data.tokens);
-          } else {
-            setTokens(null);
-          }
-        } catch {
+      if (!connected || !account?.address) {
+        toast.warning('Please connect your wallet');
+        setTokens(null);
+        return;
+      }
+
+      try {
+        // First try to fetch existing user
+        const walletAddress = formatAptosAddress(account.address);
+        let res = await fetch(`/api/users?walletAddress=${walletAddress}`);
+        
+        // If user doesn't exist, create new user
+        if (!res.ok) {
+          res = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ walletAddress }),
+          });
+        }
+
+        if (res.ok) {
+          const data = await res.json();
+          setTokens(data.tokens);
+        } else {
           setTokens(null);
         }
-      } else {
+      } catch (error) {
+        console.error('Error fetching tokens:', error);
         setTokens(null);
       }
     };
+
     fetchTokens();
   }, [connected, account]);
 
