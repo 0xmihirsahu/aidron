@@ -89,8 +89,8 @@ export default function RootLayout({
         <WalletProvider>
           <Toaster richColors />
           {children}
-          <Analytics />
         </WalletProvider>
+        <Analytics />
       </body>
     </html>
   );
